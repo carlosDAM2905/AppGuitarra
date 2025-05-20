@@ -48,6 +48,19 @@ val notasExactas = listOf(
 
     NotaVisual("F",5,6.22f, offsetX = 0.89f),
 
+    NotaVisual("B", 1, 6.60f, offsetX = -0.55f), NotaVisual("E", 2, 6.60f, offsetX = -0.21f), NotaVisual("A", 3, 6.60f, offsetX = 0.16f), NotaVisual("D", 4, 6.60f, offsetX = 0.51f), NotaVisual("B", 6, 6.60f, offsetX = 1.26f),
+
+    NotaVisual("C", 1, 6.95f, offsetX = -0.55f), NotaVisual("F", 2, 6.95f, -0.21f), NotaVisual("G", 5, 6.95f, offsetX = 0.89f), NotaVisual("C", 6, 6.95f, offsetX = 1.26f),
+
+    NotaVisual("B", 3, 7.32f, offsetX = 0.16f), NotaVisual("E", 4, 7.32f, 0.51f),
+
+    NotaVisual("D", 1, 7.68f, offsetX = -0.55f), NotaVisual("G", 2, 7.68f, offsetX = -0.21f), NotaVisual("C", 3, 7.68f, offsetX = 0.16f), NotaVisual("P", 4, 7.68f, offsetX = 0.51f), NotaVisual("A", 5, 7.68f, offsetX = 0.89f), NotaVisual("D", 6, 7.68f, offsetX = 1.26f),
+
+
+
+
+
+
 
     )
 
