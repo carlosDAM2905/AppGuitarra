@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 fun MastilVisual(modifier: Modifier = Modifier, notaSeleccionada: String, onNotaClick: (String) -> Unit) {
 
     val cuerdas = 5
-    val lineasHorizontales = 24
+    val lineasHorizontales = 22
 
     BoxWithConstraints(
         modifier = modifier
