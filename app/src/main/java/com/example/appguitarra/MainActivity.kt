@@ -37,8 +37,10 @@ fun PreviewApp() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaPrincipal() {
+    val dummyNavController = rememberNavController() // crea uno falso solo para el preview
+
     AppGuitarraTheme {
-        PantallaPrincipal()
+        PantallaPrincipal(navController = dummyNavController)
     }
 }
 

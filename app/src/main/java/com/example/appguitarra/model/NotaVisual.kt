@@ -2,6 +2,7 @@ package com.example.appguitarra.model
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.ui.principal.PantallaPrincipal
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
 
@@ -67,8 +68,10 @@ val notasExactas = listOf(
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaPrincipal() {
+    val dummyNavController = rememberNavController() // crea uno falso solo para el preview
+
     AppGuitarraTheme {
-        PantallaPrincipal()
+        PantallaPrincipal(navController = dummyNavController)
     }
 }
 
