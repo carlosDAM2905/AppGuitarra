@@ -1,7 +1,6 @@
 package com.example.appguitarra.ui.principal
 
 import MastilVisual
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -10,24 +9,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.appguitarra.R
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PantallaPrincipal() {
+fun PantallaPrincipal(navController: NavHostController) {
     var submenuActivo by remember { mutableStateOf("Modos griegos") }
     var notaSeleccionada by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // 🧠 Menú superior compacto y responsivo con logo
+        // Menú superior compacto y responsivo con logo
         Column(
 
             modifier = Modifier
@@ -73,13 +71,13 @@ fun PantallaPrincipal() {
             }
         }
 
-        // 🔽 Contenido principal
+        // Contenido principal
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            // 🎸 Mástil a la izquierda
+            // Mástil a la izquierda
             Box(
                 modifier = Modifier
                     .width(100.dp)
@@ -95,7 +93,7 @@ fun PantallaPrincipal() {
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // 📑 Zona de información a la derecha
+            // Zona de información a la derecha
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -167,6 +165,13 @@ fun PantallaPrincipal() {
                             fontSize = 14.sp,
                             color = Color(0xFF3E5060)
                         )
+
+                        Button(onClick = {
+                            navController.navigate("actividad_armadura")
+                        }) {
+                            Text("Iniciar actividad de armadura")
+                        }
+
                     }
                 }
             }
@@ -179,7 +184,8 @@ fun PantallaPrincipal() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaPrincipal() {
+    val dummyNavController  = rememberNavController()
     AppGuitarraTheme {
-        PantallaPrincipal()
+        PantallaPrincipal(navController = dummyNavController)
     }
 }
