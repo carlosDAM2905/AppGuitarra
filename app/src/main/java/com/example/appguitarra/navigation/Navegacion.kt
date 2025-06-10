@@ -4,9 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.appguitarra.ui.actividades.PantallaActividadArmadura
 import com.example.appguitarra.ui.login.PantallaLogin
 import com.example.appguitarra.ui.login.PantallaRegistro
 import com.example.appguitarra.ui.principal.PantallaPrincipal
+import com.example.appguitarra.ui.theme.AppGuitarraTheme
 
 
 object Rutas {
@@ -34,7 +37,13 @@ fun Navegacion(navController: NavHostController) {
 
 
         composable(Rutas.PRINCIPAL) {
-            PantallaPrincipal()
+            PantallaPrincipal(navController) // ✅ esto está bien
         }
+
+        composable("actividad_armadura") {
+            PantallaActividadArmadura(navController)
+        }
+
+        }
+
     }
-}
