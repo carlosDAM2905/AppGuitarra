@@ -5,14 +5,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.appguitarra.data.AppDatabase
 import com.example.appguitarra.model.Usuario
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun PantallaRegistro(
+    navController: NavController,
     onRegistroExitoso: () -> Unit
 ) {
     val contexto = LocalContext.current
@@ -56,6 +60,7 @@ fun PantallaRegistro(
             value = contraseña,
             onValueChange = { contraseña = it },
             label = { Text("Contraseña") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -79,15 +84,30 @@ fun PantallaRegistro(
                                     esPremium = false
                                 )
                             )
-                            onRegistroExitoso()
+                            withContext(Dispatchers.Main) {
+                                onRegistroExitoso()
+                            }
                         }
                     }
                 }
             },
+
+
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Registrarse")
         }
+
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .padding(top = 16.dp)
+        ) {
+            Text("Volver al inicio de sesión")
+        }
+
 
         if (mensajeError.isNotBlank()) {
             Spacer(modifier = Modifier.height(16.dp))
