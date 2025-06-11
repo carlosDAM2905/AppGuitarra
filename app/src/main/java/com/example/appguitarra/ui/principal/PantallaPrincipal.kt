@@ -27,45 +27,41 @@ fun PantallaPrincipal(navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {
         // Menú superior compacto y responsivo con logo
         Column(
-
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFE7F0F9), shape = RoundedCornerShape(0,0,30,30))
-                .border(0.5.dp, color = Color (0xFF153B59), shape = RoundedCornerShape(0,0,30,30))
-                .padding(1.dp)
-
+                .padding(top = 10.dp, start = 4.dp, end = 4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth()
+            Surface(
+                color = Color(0xFFE7F0F9),
+                shape = RoundedCornerShape(24.dp),
+                tonalElevation = 2.dp,
+                shadowElevation = 4.dp,
+                modifier = Modifier.padding(8.dp)
             ) {
-
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                listOf("Ciclo de 5ª/4ª", "Armadura armónica", "Modos griegos").forEach { item ->
-                    val isSelected = submenuActivo == item
-                    Button(
-                        onClick = { submenuActivo = item },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isSelected) Color(0xFFD0E4F7) else Color(0xFFE7F0F9),
-                            contentColor = if (isSelected) Color(0xFF153B59) else Color(0xFF153B59)
-                        ),
-                        shape = RoundedCornerShape(50),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = item,
-                            fontSize = 12.sp,
-                            color = Color(0xFF153B59)
-                        )
+                FlowRow(
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    listOf("Ciclo de 5ª/4ª", "Armadura armónica", "Modos griegos").forEach { item ->
+                        val isSelected = submenuActivo == item
+                        Button(
+                            onClick = { submenuActivo = item },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isSelected) Color(0xFFD0E4F7) else Color(0xFFE7F0F9),
+                                contentColor = Color(0xFF153B59)
+                            ),
+                            shape = RoundedCornerShape(50),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = item,
+                                fontSize = 10.sp
+                            )
+                        }
                     }
                 }
             }
