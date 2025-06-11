@@ -29,7 +29,7 @@ fun PantallaPrincipal(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, start = 4.dp, end = 4.dp),
+                .padding(top = 18.dp, start = 4.dp, end = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Surface(
