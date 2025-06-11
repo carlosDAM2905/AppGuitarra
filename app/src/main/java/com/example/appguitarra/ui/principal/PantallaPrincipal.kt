@@ -167,7 +167,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                     "Modos griegos" -> {
                         Text("Los modos griegos son escalas con diferentes sensaciones armónicas.", fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { navController.navigate("teoria_modosgriegos") }) {
+                        Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_GRIEGOS) }) {
                             Text("Ir a teoría")
                         }
                     }

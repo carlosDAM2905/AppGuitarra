@@ -10,6 +10,7 @@ import com.example.appguitarra.ui.actividades.PantallaActividadArmadura
 import com.example.appguitarra.ui.login.PantallaRegistro
 import com.example.appguitarra.ui.principal.PantallaPrincipal
 import com.example.appguitarra.ui.teoria.TeoriaArmadura
+import com.example.appguitarra.ui.teoria.TeoriaModosGriegos
 
 
 object Rutas {
@@ -18,6 +19,9 @@ object Rutas {
     const val REGISTRO = "registro"
     const val TEORIA_ARMADURA = "armadura"
     const val ARMADURA_ACTIVIDAD = "actividad_armadura"
+
+    //esto acabo de añadirlo
+    const val TEORIA_MODOS_GRIEGOS = "griegos"
 }
 
 @Composable
@@ -55,6 +59,12 @@ fun Navegacion(navController: NavHostController) {
 
         composable(Rutas.ARMADURA_ACTIVIDAD) {
             PantallaActividadArmadura(
+                navController
+            )
+        }
+
+        composable(Rutas.TEORIA_MODOS_GRIEGOS) {
+            TeoriaModosGriegos(
                 navController
             )
         }
