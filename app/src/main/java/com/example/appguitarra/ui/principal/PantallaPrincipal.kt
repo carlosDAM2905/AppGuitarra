@@ -63,7 +63,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                     ) {
                         Text(
                             text = item,
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             color = Color(0xFF153B59)
                         )
                     }

@@ -15,19 +15,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.appguitarra.data.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun PantallaLogin (
     onLoginSuccess: () -> Unit,
     onRegistroClick: () -> Unit
 ) {
+    val contexto = LocalContext.current
+    val db = remember { AppDatabase.getDatabase(contexto) }
+    val scope = rememberCoroutineScope()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf("") }
@@ -68,23 +78,35 @@ fun PantallaLogin (
                 if (email.isBlank() || password.isBlank()) {
                     mensajeError = "Rellena todos los campos"
                 } else {
-                    // mas adelante aqui ira comprobacion en bbdd
-                    onLoginSuccess()
+                    scope.launch(Dispatchers.IO) {
+                        val usuario = db.usuarioDao().login(email, password)
+                        if (usuario != null) {
+                            withContext(Dispatchers.Main) {
+                                mensajeError = ""
+                                onLoginSuccess()
+                            }
+                        } else {
+                            withContext(Dispatchers.Main) {
+                                mensajeError = "Correo o contraseña incorrectos"
+                            }
+                        }
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Iniciar Sesión")
         }
+
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextButton(onClick = {onRegistroClick() }) {
+        TextButton(onClick = onRegistroClick) {
             Text("¿No tienes cuenta? Regístrate")
         }
+
         if (mensajeError.isNotEmpty()) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(mensajeError, color = Color.Red)
         }
     }
-
 }
