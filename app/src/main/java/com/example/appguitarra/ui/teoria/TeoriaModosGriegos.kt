@@ -46,7 +46,9 @@ fun TeoriaModosGriegos (navController: NavController) {
             text = "Modos Griegos",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 16.dp)
         )
 
@@ -54,7 +56,8 @@ fun TeoriaModosGriegos (navController: NavController) {
             text = "Los modos griegos son escalas que se forman a partir de las notas de una tonalidad mayor, comenzando desde cada uno de sus grados. Cada modo tiene su propia sonoridad y uso característico en la música moderna y clásica.",
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier
+                .padding(bottom = 16.dp)
         )
 
         // imagen 1 jonica:
