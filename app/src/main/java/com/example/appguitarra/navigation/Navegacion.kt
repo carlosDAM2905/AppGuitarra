@@ -1,21 +1,23 @@
 package com.example.appguitarra.navigation
 
+import PantallaLogin
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+
 import com.example.appguitarra.ui.actividades.PantallaActividadArmadura
-import com.example.appguitarra.ui.login.PantallaLogin
 import com.example.appguitarra.ui.login.PantallaRegistro
 import com.example.appguitarra.ui.principal.PantallaPrincipal
-import com.example.appguitarra.ui.theme.AppGuitarraTheme
+import com.example.appguitarra.ui.teoria.TeoriaArmadura
 
 
 object Rutas {
     const val LOGIN = "login"
     const val PRINCIPAL = "principal"
     const val REGISTRO = "registro"
+    const val TEORIA_ARMADURA = "armadura"
+    const val ARMADURA_ACTIVIDAD = "actividad_armadura"
 }
 
 @Composable
@@ -43,6 +45,18 @@ fun Navegacion(navController: NavHostController) {
 
         composable("actividad_armadura") {
             PantallaActividadArmadura(navController)
+        }
+
+        composable(Rutas.TEORIA_ARMADURA) {
+            TeoriaArmadura(
+                navController
+            )
+        }
+
+        composable(Rutas.ARMADURA_ACTIVIDAD) {
+            PantallaActividadArmadura(
+                navController
+            )
         }
 
         }

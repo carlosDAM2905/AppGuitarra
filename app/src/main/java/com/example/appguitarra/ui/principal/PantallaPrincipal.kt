@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.appguitarra.navigation.Rutas
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -159,7 +160,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                     "Armadura armónica" -> {
                         Text("La armadura de clave indica las alteraciones presentes en una tonalidad.", fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { navController.navigate("teoria_armadura") }) {
+                        Button(onClick = { navController.navigate(Rutas.TEORIA_ARMADURA) }) {
                             Text("Ir a teoría")
                         }
                     }

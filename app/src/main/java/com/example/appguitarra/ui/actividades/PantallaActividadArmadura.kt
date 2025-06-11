@@ -137,7 +137,7 @@ fun PantallaActividadArmadura(navController: NavController) {
                         respuestaSeleccionada = null
                         mostrarResultado = false
                     } else {
-                        navController.navigate(Rutas.PRINCIPAL)
+                        navController.navigate(Rutas.TEORIA_ARMADURA)
                     }
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
