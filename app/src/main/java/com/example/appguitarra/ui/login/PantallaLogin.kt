@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +58,8 @@ fun PantallaLogin (
             onValueChange = {email = it},
             label = { Text("Correo electrónico") },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            textStyle = TextStyle(color = Color.Black)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -68,7 +70,8 @@ fun PantallaLogin (
             label = { Text("Contraseña") },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            textStyle = TextStyle(color = Color.Black)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
