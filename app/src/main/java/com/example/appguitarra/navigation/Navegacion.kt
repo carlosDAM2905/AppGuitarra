@@ -25,19 +25,20 @@ fun Navegacion(navController: NavHostController) {
         composable(Rutas.LOGIN) {
             PantallaLogin(
                 onLoginSuccess = { navController.navigate(Rutas.PRINCIPAL) },
-                onRegistroClick = { /* futura pantalla de registro */ }
+                onRegistroClick = { navController.navigate(Rutas.REGISTRO) }
             )
         }
 
         composable(Rutas.REGISTRO) {
             PantallaRegistro(
+                navController = navController,
                 onRegistroExitoso = { navController.navigate(Rutas.LOGIN) }
             )
         }
 
 
         composable(Rutas.PRINCIPAL) {
-            PantallaPrincipal(navController) // ✅ esto está bien
+            PantallaPrincipal(navController)
         }
 
         composable("actividad_armadura") {

@@ -27,7 +27,7 @@ fun MastilVisual(modifier: Modifier = Modifier, notaSeleccionada: String, onNota
         val cellW = totalWidth / cuerdas
         val cellH = totalHeight / lineasHorizontales
 
-        // 🎸 Canvas: cuerdas y trastes
+        // Canvas: cuerdas y trastes
         Canvas(modifier = Modifier.fillMaxSize()) {
             // Líneas verticales (cuerdas)
             for (i in 0..cuerdas) {
@@ -54,7 +54,7 @@ fun MastilVisual(modifier: Modifier = Modifier, notaSeleccionada: String, onNota
 
 
 
-            // 🎯 Notas en posiciones exactas
+            // Notas en posiciones exactas
             notasExactas.forEach { nota ->
                 val x = ((0.5f + (nota.offsetX ?: 0f)) / cuerdas) * totalWidth
                 val y = (nota.yLine / lineasHorizontales) * totalHeight
