@@ -127,7 +127,7 @@ fun TeoriaModosGriegos (navController: NavController) {
 
         // Botón para actividad
         Button(
-            onClick = { navController.navigate("actividad_modos_griegos") },
+            onClick = { navController.navigate(Rutas.MODOS_GRIEGOS_ACTIVIDAD) },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()

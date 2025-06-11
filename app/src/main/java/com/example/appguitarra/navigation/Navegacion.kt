@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import com.example.appguitarra.ui.actividades.PantallaActividadArmadura
+import com.example.appguitarra.ui.actividades.PantallaActividadModosGriegos
 import com.example.appguitarra.ui.login.PantallaRegistro
 import com.example.appguitarra.ui.principal.PantallaPrincipal
 import com.example.appguitarra.ui.teoria.TeoriaArmadura
@@ -22,6 +23,7 @@ object Rutas {
 
     //esto acabo de añadirlo
     const val TEORIA_MODOS_GRIEGOS = "griegos"
+    const val MODOS_GRIEGOS_ACTIVIDAD = "actividad_modos_griegos"
 }
 
 @Composable
@@ -68,6 +70,14 @@ fun Navegacion(navController: NavHostController) {
                 navController
             )
         }
+
+        composable(Rutas.MODOS_GRIEGOS_ACTIVIDAD) {
+            PantallaActividadModosGriegos(
+                navController
+            )
+        }
+
+
 
         }
 
