@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,7 @@ data class PreguntaArmadura(
     val imagen: Int,
     val opciones: List<String>,
     val correcta: String,
-    val explicacion: String
+    val explicacion: Int
 )
 
 // Lista de preguntas
@@ -39,37 +40,37 @@ val preguntas = listOf(
         R.drawable.armadura_3_sostenidos,
         listOf("G", "D", "A"),
         "A",
-        "La armadura de 3 sostenidos (F♯, C♯ y G♯) corresponde a A Mayor."
+        R.string.explicacion_pregunta1
     ),
     PreguntaArmadura(
         R.drawable.armadura_2_sostenidos,
         listOf("E", "D", "C"),
         "D",
-        "La armadura de 2 sostenidos (F♯ y C♯) corresponde a D Mayor."
+        R.string.explicacion_pregunta2
     ),
     PreguntaArmadura(
         R.drawable.armadura_de_ab,
         listOf("Ab", "Bb", "F"),
         "Ab",
-        "La armadura mostrada tiene 4 bemoles (Bb, Eb, Ab y Db), lo que corresponde a Ab Mayor."
+        R.string.explicacion_pregunta3
     ),
     PreguntaArmadura(
         R.drawable.armadura_de_eb,
         listOf("Eb", "F", "Bb"),
         "Eb",
-        "La armadura de Eb Mayor tiene tres bemoles: Bb, Eb y Ab. Es la armadura mostrada en la imagen."
+        R.string.explicacion_pregunta4
     ),
     PreguntaArmadura(
         R.drawable.armadura_de_f,
         listOf("C", "F", "G"),
         "F",
-        "La armadura de F Mayor tiene un solo bemol (Bb), como se ve en la imagen."
+        R.string.explicacion_pregunta5
     ),
     PreguntaArmadura(
         R.drawable.true_false,
         listOf("Verdadero", "Falso"),
         "Falso",
-        "La afirmación sobre Ab es incorrecta: Ab tiene cuatro bemoles, no dos. Por tanto, la imagen contiene un error."
+        R.string.explicacion_pregunta6
     )
 
 
@@ -99,15 +100,19 @@ fun PantallaActividadArmadura(navController: NavController) {
         ) {
             // Título
             Text(
-                text = if (aprobado) "🎉 ¡Has superado la actividad!" else "😢 No has alcanzado el mínimo.",
+                text = stringResource(
+                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida
+                ),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = if (aprobado) Color(0xFF1A6D1A) else Color(0xFFAF1E1E)
             )
 
             Text(
-                text = "Has acertado $aciertos/${preguntas.size} preguntas.",
+                text = stringResource(
+                    R.string.actividad_resumen, aciertos, preguntas.size
 
+                ),
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth(),
@@ -129,7 +134,7 @@ fun PantallaActividadArmadura(navController: NavController) {
             Button(onClick = {
                 navController.navigate(Rutas.PRINCIPAL)
             }) {
-                Text("Volver al inicio")
+                Text(text = stringResource(R.string.volver_inicio))
             }
         }
 
@@ -142,7 +147,7 @@ fun PantallaActividadArmadura(navController: NavController) {
             .padding(16.dp)
     ) {
         Text(
-            text = "Actividad: Identifica el modo griego",
+            text = stringResource(R.string.titulo_actividad_armadura),
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold
         )
@@ -177,7 +182,7 @@ fun PantallaActividadArmadura(navController: NavController) {
                 ) {
                     Image(
                         painter = painterResource(id = pregunta.imagen),
-                        contentDescription = "Imagen de armadura",
+                        contentDescription = stringResource(R.string.descripcion_imagen_armadura),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
@@ -216,66 +221,78 @@ fun PantallaActividadArmadura(navController: NavController) {
                     if (mostrarResultado) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = if (esCorrecta) "✅ ¡Correcto! ${pregunta.explicacion}" else "❌ Incorrecto. ${pregunta.explicacion}",
+                            text = stringResource(
+                                id = if (esCorrecta) R.string.respuesta_correcta else R.string.respuesta_incorrecta,
+                                stringResource(pregunta.explicacion)
+                            ),
                             color = if (esCorrecta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
                             fontWeight = FontWeight.SemiBold
                         )
                     }
+
                 }
             }
         }
 
 
-            Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-            if (mostrarResultado) {
-                Button(
-                    onClick = {
-                        if (esCorrecta) aciertos++
+        if (mostrarResultado) {
+            Button(
+                onClick = {
+                    if (esCorrecta) aciertos++
 
-                        if (preguntaActual < preguntas.lastIndex) {
-                            preguntaActual++
-                            respuestaSeleccionada = null
-                            mostrarResultado = false
-                        } else {
-                            finalizado = true
-                        }
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text(if (preguntaActual < preguntas.lastIndex) "Siguiente" else "Finalizar")
-                }
+                    if (preguntaActual < preguntas.lastIndex) {
+                        preguntaActual++
+                        respuestaSeleccionada = null
+                        mostrarResultado = false
+                    } else {
+                        finalizado = true
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = stringResource(
+                        id = if (preguntaActual < preguntas.lastIndex)
+                            R.string.boton_siguiente
+                        else
+                            R.string.boton_finalizar
+                    )
+                )
+
             }
         }
     }
+}
 
-    @Composable
-    fun ConfetiAnimacion2(modifier: Modifier = Modifier) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
-        val progress by animateLottieCompositionAsState(
-            composition
-            = composition,
-            iterations = 3
-        )
+@Composable
+fun ConfetiAnimacion2(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
+    val progress by animateLottieCompositionAsState(
+        composition
+        = composition,
+        iterations = 3
+    )
 
-        LottieAnimation(
-            composition = composition,
-            progress = { progress },
-            modifier = modifier
-        )
-    }
+    LottieAnimation(
+        composition = composition,
+        progress = { progress },
+        modifier = modifier
+    )
+}
 
-    @Composable
-    fun Guitarrista2Animacion(modifier: Modifier = Modifier) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista_woman.json"))
-        val progress by animateLottieCompositionAsState(
-            composition = composition,
-            iterations = LottieConstants.IterateForever
-        )
+@Composable
+fun Guitarrista2Animacion(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista_woman.json"))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
 
-        LottieAnimation(
-            composition = composition,
-            progress = { progress },
-            modifier = modifier
-        )
-    }
+    LottieAnimation(
+        composition = composition,
+        progress = { progress },
+        modifier = modifier
+    )
+}

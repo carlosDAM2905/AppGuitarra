@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">AppGuitarra</string>
+
+    <!--PantallaActividadArmadura.kt -->
+    <string name="explicacion_pregunta1">La armadura de 3 sostenidos (F♯, C♯ y G♯) corresponde a A Mayor.</string>
+    <string name="explicacion_pregunta2">La armadura de 2 sostenidos (F♯ y C♯) corresponde a D Mayor.</string>
+    <string name="explicacion_pregunta3">La armadura mostrada tiene 4 bemoles (Bb, Eb, Ab y Db), lo que corresponde a Ab Mayor.</string>
+    <string name="explicacion_pregunta4">La armadura de Eb Mayor tiene tres bemoles: Bb, Eb y Ab. Es la armadura mostrada en la imagen.</string>
+    <string name="explicacion_pregunta5">La armadura de F Mayor tiene un solo bemol (Bb), como se ve en la imagen.</string>
+    <string name="explicacion_pregunta6">La afirmación sobre Ab es incorrecta: Ab tiene cuatro bemoles, no dos. Por tanto, la imagen contiene un error.</string>
+
+    <string name="actividad_aprobada">🎉 ¡Has superado la actividad!</string>
+    <string name="actividad_suspendida">😢 No has alcanzado el mínimo.</string>
+
+    <string name="actividad_resumen">Has acertado %1$d de %2$d preguntas.</string>
+
+    <string name="volver_inicio">Volver al inicio</string>
+
+    <string name="titulo_actividad_armadura">Actividad: Identifica el modo griego</string>
+
+    <string name="descripcion_imagen_armadura">Imagen de armadura</string>
+
+    <string name="respuesta_correcta">✅ ¡Correcto! %1$s</string>
+    <string name="respuesta_incorrecta">❌ Incorrecto. %1$s</string>
+
+    <string name="boton_siguiente">Siguiente</string>
+    <string name="boton_finalizar">Finalizar</string>
+
+
+
+
+
+
+
+
+
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
+
 </resources>
