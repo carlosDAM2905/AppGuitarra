@@ -42,12 +42,7 @@ fun PantallaPrincipalImagen() {
                     .weight(2.5f)
                     .fillMaxHeight()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.mastil_completo),
-                    contentDescription = "Mástil de guitarra",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.fillMaxSize()
-                )
+
 
                 Row(
                     modifier = Modifier

@@ -1,6 +1,7 @@
 package com.example.appguitarra.ui.principal
 
 import MastilVisual
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,14 +10,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.appguitarra.R
 import com.example.appguitarra.navigation.Rutas
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
+
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.Density
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -51,7 +63,9 @@ fun PantallaPrincipal(navController: NavHostController) {
                         Button(
                             onClick = { submenuActivo = item },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isSelected) Color(0xFFD0E4F7) else Color(0xFFE7F0F9),
+                                containerColor = if (isSelected) Color(0xFFD0E4F7) else Color(
+                                    0xFFE7F0F9
+                                ),
                                 contentColor = Color(0xFF153B59)
                             ),
                             shape = RoundedCornerShape(50),
@@ -71,16 +85,23 @@ fun PantallaPrincipal(navController: NavHostController) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(8.dp, 20.dp)
         ) {
-            // Mástil
             Box(
                 modifier = Modifier
                     .width(100.dp)
                     .height(720.dp)
-                    .background(Color.White, shape = RoundedCornerShape(16.dp))
-                    .padding(8.dp)
+
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.mastil_fondo),
+                    contentDescription = "Fondo mástil",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(180.dp)
+                        .height(720.dp)
+                )
+
                 MastilVisual(
                     notaSeleccionada = notaSeleccionada,
                     onNotaClick = { notaSeleccionada = it }
@@ -108,13 +129,17 @@ fun PantallaPrincipal(navController: NavHostController) {
                         Button(
                             onClick = { notaSeleccionada = nota },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (notaSeleccionada == nota) Color(0xFFB4D4F0) else Color(0xFFE0ECF5)
+                                containerColor = if (notaSeleccionada == nota) Color(0xFFB4D4F0) else Color(
+                                    0xFFE0ECF5
+                                )
                             ),
-                            shape = RoundedCornerShape(50),
+                            shape = shapePua(),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                            modifier = Modifier.sizeIn(minWidth = 36.dp, minHeight = 28.dp)
+                            modifier = Modifier
+                                .size(56.dp)
+                                .graphicsLayer(rotationZ = -140f)
                         ) {
-                            Text(text = nota, fontSize = 12.sp, color = Color(0xFF153B59))
+                            Text(modifier = Modifier.graphicsLayer(rotationZ = 140f), text = nota, fontSize = 12.sp, color = Color(0xFF153B59))
                         }
                     }
                 }
@@ -151,21 +176,32 @@ fun PantallaPrincipal(navController: NavHostController) {
                 // Contenido específico del submenu
                 when (submenuActivo) {
                     "Ciclo de 5ª/4ª" -> {
-                        Text("El ciclo de quintas/cuarta se usa para visualizar relaciones entre tonalidades.", fontSize = 14.sp)
+                        Text(
+                            "El ciclo de quintas/cuarta se usa para visualizar relaciones entre tonalidades.",
+                            fontSize = 14.sp
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate("teoria_ciclos") }) {
                             Text("Ir a teoría")
                         }
                     }
+
                     "Armadura armónica" -> {
-                        Text("La armadura de clave indica las alteraciones presentes en una tonalidad.", fontSize = 14.sp)
+                        Text(
+                            "La armadura de clave indica las alteraciones presentes en una tonalidad.",
+                            fontSize = 14.sp
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate(Rutas.TEORIA_ARMADURA) }) {
                             Text("Ir a teoría")
                         }
                     }
+
                     "Modos griegos" -> {
-                        Text("Los modos griegos son escalas con diferentes sensaciones armónicas.", fontSize = 14.sp)
+                        Text(
+                            "Los modos griegos son escalas con diferentes sensaciones armónicas.",
+                            fontSize = 14.sp
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_GRIEGOS) }) {
                             Text("Ir a teoría")
@@ -177,6 +213,28 @@ fun PantallaPrincipal(navController: NavHostController) {
     }
 }
 
+fun shapePua(): Shape = object : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ): Outline {
+        val width = size.width
+        val height = size.height
+
+        val path = Path().apply {
+            moveTo(width * 0.5f, 0f)
+            quadraticTo(width, height * 0.2f, width * 0.8f, height * 0.8f)
+            quadraticTo(width * 0.5f, height, width * 0.2f, height * 0.8f)
+            quadraticTo(0f, height * 0.2f, width * 0.5f, 0f)
+            close()
+        }
+
+        return Outline.Generic(path)
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaPrincipal() {
@@ -185,3 +243,4 @@ fun PreviewPantallaPrincipal() {
         PantallaPrincipal(navController = dummyNavController)
     }
 }
+
