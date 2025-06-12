@@ -104,8 +104,11 @@ fun PantallaRegistro(
             },
             modifier = Modifier
                 .padding(top = 16.dp)
+                .fillMaxWidth()
         ) {
             Text("Volver al inicio de sesión")
+
+
         }
 
 

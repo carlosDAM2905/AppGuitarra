@@ -105,6 +105,15 @@ fun TeoriaArmadura(navController: NavController) {
                 .padding(vertical = 16.dp)
         )
 
+        Image(
+            painter = painterResource(id = R.drawable.armadura_bemoles),
+            contentDescription = "imagen armadura bemoles",
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        )
+
         Spacer(modifier = Modifier.height(32.dp))
 
         // Botón para actividad

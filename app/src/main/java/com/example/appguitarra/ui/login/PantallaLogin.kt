@@ -1,4 +1,5 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -34,6 +35,7 @@ fun PantallaLogin(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(24.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -65,7 +67,8 @@ fun PantallaLogin(
             shape = RoundedCornerShape(16.dp),
             shadowElevation = 8.dp,
             tonalElevation = 2.dp,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            color = Color.White //modo claro en el login, sino falla
         ) {
             Column(
                 modifier = Modifier
@@ -123,7 +126,8 @@ fun PantallaLogin(
 
                 if (mensajeError.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text(mensajeError, color = MaterialTheme.colorScheme.error)
+                    Text(mensajeError, color = Color.Red) // fuerza el rojo clásico
+
                 }
             }
         }
