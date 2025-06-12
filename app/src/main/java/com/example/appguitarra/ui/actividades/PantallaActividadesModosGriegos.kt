@@ -245,9 +245,11 @@ fun PantallaActividadModosGriegos(navController: NavController) {
 @Composable
 fun ConfetiAnimacion(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
-    val progress by animateLottieCompositionAsState(composition
-     = composition,
-        iterations = 3)
+    val progress by animateLottieCompositionAsState(
+        composition
+        = composition,
+        iterations = 3
+    )
 
     LottieAnimation(
         composition = composition,
