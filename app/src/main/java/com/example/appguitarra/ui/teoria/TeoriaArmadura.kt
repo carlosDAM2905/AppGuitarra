@@ -20,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -47,14 +49,18 @@ fun TeoriaArmadura(navController: NavController) {
     ) {
 
         Text(
-            text = "Armadura armónica",
+            text = stringResource(R.string.armadura),
+            color = Color(0xFF5FA3E7),
             fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 16.dp)
         )
         Text(
-            text = "Ciclo de quintas",
-            fontSize = 24.sp,
+            text = stringResource(R.string.ciclo_de_quintas),
+            fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -64,7 +70,7 @@ fun TeoriaArmadura(navController: NavController) {
         )
 
         Text(
-            text = "El ciclo de quintas nos muestra cuántos sostenidos tiene cada armadura. Para saber en qué tonalidad Jónica (mayor) está escrita una pieza, se puede observar cuántos sostenidos aparecen y consultarlo en el siguiente gráfico.",
+            text = stringResource(R.string.explicacion_1_armadura),
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -72,7 +78,7 @@ fun TeoriaArmadura(navController: NavController) {
 
         Image(
             painter = painterResource(id = R.drawable.ciclo_de_quintas1),
-            contentDescription = "Ciclo de quintas 1",
+            contentDescription = stringResource(R.string.descripcion_ciclo_quintas1),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,7 +87,7 @@ fun TeoriaArmadura(navController: NavController) {
 
         Image(
             painter = painterResource(id = R.drawable.ciclo_de_quintas2),
-            contentDescription = "ciclo de quintas 2",
+            contentDescription = stringResource(R.string.descripcion_ciclo_quintas2),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
@@ -89,7 +95,7 @@ fun TeoriaArmadura(navController: NavController) {
         )
 
         Text(
-            text = "En caso de que la tonalidad use bemoles en lugar de sostenidos, podemos guiarnos por este otro gráfico:",
+            text = stringResource(R.string.explicacion_armadura2),
             fontSize = 16.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -98,7 +104,7 @@ fun TeoriaArmadura(navController: NavController) {
 
         Image(
             painter = painterResource(id = R.drawable.ciclo_de_cuartas),
-            contentDescription = "imagen armadura ciclo de cuartas",
+            contentDescription = stringResource(R.string.descripcion_armadura_ciclo_cuartas),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,7 +113,7 @@ fun TeoriaArmadura(navController: NavController) {
 
         Image(
             painter = painterResource(id = R.drawable.armadura_bemoles),
-            contentDescription = "imagen armadura bemoles",
+            contentDescription = stringResource(R.string.descripcion_armadura_bemoles),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,7 +129,7 @@ fun TeoriaArmadura(navController: NavController) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
         ) {
-            Text("Ir a la actividad")
+            Text(stringResource(R.string.ir_a_actividad))
         }
 
         // Divider entre botones
@@ -142,7 +148,7 @@ fun TeoriaArmadura(navController: NavController) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
         ) {
-            Text("Volver a la página principal")
+            Text(stringResource(R.string.volver_pagina_princial))
         }
     }
 }

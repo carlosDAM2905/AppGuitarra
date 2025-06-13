@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,14 +26,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.R
 import com.example.appguitarra.navigation.Rutas
 
+
 @Composable
-fun TeoriaModosGriegos(navController: NavController) {
+fun TeoriaModosJonicos(navController: NavController) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -44,7 +46,7 @@ fun TeoriaModosGriegos(navController: NavController) {
     ) {
 
         Text(
-            text = stringResource(R.string.modos_griegos),
+            text = stringResource(R.string.modos_jonicos),
             color = Color(0xFF5FA3E7),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -52,114 +54,120 @@ fun TeoriaModosGriegos(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 16.dp)
+
         )
 
         Text(
-            text = stringResource(R.string.explicacion1_modos_griegos),
+            text = stringResource(R.string.escala_jonica),
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 12.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.texto1_modos_jonicos),
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier
                 .padding(bottom = 16.dp)
         )
 
-        // imagen 1:
-        Image(
-            painter = painterResource(id = R.drawable.modos_griegos_escalas),
-            contentDescription = stringResource(R.string.descripcion_imagen_escalas),
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 660.dp)
-                .padding(bottom = 24.dp)
-        )
-
-        Text(
-            text = stringResource(R.string.modo_jonico_grado1),
-            color = Color.Black,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
-
-        )
-        Text(
-            text = stringResource(R.string.explicacion_modos_griegos2),
-            textAlign = TextAlign.Justify,
-            fontSize = 15.sp,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
+        //imagen 1 jonica
 
         Image(
-            painter = painterResource(R.drawable.armadura_mejorada),
-            contentDescription = stringResource(R.string.descripcion_armadura_modos_griegos),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        Text(
-            text = stringResource(R.string.acordes_en_do_mayor),
-            color = Color.Black,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
-        )
-
-        Text(
-            text = stringResource(R.string.explicacion_modos_griegos3),
-            textAlign = TextAlign.Justify,
-            fontSize = 15.sp,
-            modifier = Modifier
-                .padding(top = 16.dp, bottom = 16.dp)
-        )
-
-        Image(
-            painter = painterResource(R.drawable.armonizada_acordes_tetrada1),
-            contentDescription = stringResource(R.string.descripcion_armonizacion_acordes),
+            painterResource(id = R.drawable.modo_jonico1),
+            contentDescription = stringResource(R.string.descripcion_imagen_griegos1),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp)
         )
 
-        //imagen acordes tetradas y su explicación
-
         Text(
-            stringResource(R.string.modos_griegos_mastil),
+            text = stringResource(R.string.raiz_bordon),
             color = Color.Black,
             fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
-
+                .padding(top = 16.dp, bottom = 12.dp)
         )
+
         Text(
-            text = stringResource(R.string.explicacion_modos_griegos4),
+            text = stringResource(R.string.explicacion_raiz_bordon),
+            fontSize = 16.sp,
             textAlign = TextAlign.Justify,
-            fontSize = 15.sp,
             modifier = Modifier
                 .padding(bottom = 16.dp)
         )
-
         Image(
-            painter = painterResource(R.drawable.armonizada_acordes_tetrada2),
-            contentDescription = stringResource(R.string.descripcion_modos_diapason),
+            painterResource(id = R.drawable.acordes_jonicos_raiz_bordon),
+            contentDescription = stringResource(R.string.descripcion_imagen_acordes_jonicos_raiz_bordon),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp)
+                .padding(bottom = 24.dp)
         )
 
-        //modificada la altura para poder visualizar los dos botones
+        Text(
+            text = stringResource(R.string.acordes_jonicos_raiz_quinta),
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 12.dp)
+        )
+        Text(
+            text = stringResource(R.string.explicacion_raiz_quinta),
+            fontSize = 16.sp,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+        )
+        Image(
+            painterResource(id = R.drawable.acordes_jonicos_raiz_quinta),
+            contentDescription = stringResource(R.string.descripcion_imagen_acordes_raiz_en_quinta),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.acordes_jonicos_raiz_cuarta),
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 12.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.explicacion_raiz_cuarta),
+            fontSize = 16.sp,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+        )
+        Image(
+            painterResource(R.drawable.acordes_jonicos_raiz_cuarta),
+            contentDescription = stringResource(R.string.descripcion_imagen_acordes_raiz_en_cuarta),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+
         Spacer(modifier = Modifier.height(64.dp))
 
-        // Botón para actividad
+        //botón de actividad:
         Button(
-            onClick = { navController.navigate(Rutas.MODOS_GRIEGOS_ACTIVIDAD) },
+            onClick = { navController.navigate(Rutas.MODOS_JONICOS_ACTIVIDAD) },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
@@ -177,7 +185,7 @@ fun TeoriaModosGriegos(navController: NavController) {
             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
         )
 
-        // Botón para volver al inicio
+        //volver a inicio:
         OutlinedButton(
             onClick = { navController.navigate("principal") },
             modifier = Modifier
@@ -188,6 +196,7 @@ fun TeoriaModosGriegos(navController: NavController) {
                 stringResource(R.string.volver_pagina_princial)
             )
         }
+
     }
 
 
@@ -197,13 +206,13 @@ fun TeoriaModosGriegos(navController: NavController) {
 //previews;
 
 @Composable
-fun TeoriaModosGriegosPreviewable() {
-    TeoriaModosGriegos(navController = rememberNavController())
+fun TeoriaModosJonicosPreviewable() {
+    TeoriaModosJonicos(navController = rememberNavController())
 }
 
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun TeoriaModosGriegosPreview() {
-    TeoriaModosGriegosPreviewable()
+fun TeoriaModosJonicosPreview() {
+    TeoriaModosJonicosPreviewable()
 }

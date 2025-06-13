@@ -61,7 +61,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                 ) {
 
                     val opcionesSubmenu = listOf(
-                        stringResource(R.string.submenu_ciclo_quintas),
+                        stringResource(R.string.submenu_modos_jonicos),
                         stringResource(R.string.submenu_armadura),
                         stringResource(R.string.submenu_modos_griegos)
                     )
@@ -187,19 +187,19 @@ fun PantallaPrincipal(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                val opcionCiclo = stringResource(R.string.submenu_ciclo_quintas)
+                val opcionJonicos = stringResource(R.string.submenu_modos_jonicos)
                 val opcionArmadura = stringResource(R.string.submenu_armadura)
-                val opcionModos = stringResource(R.string.submenu_modos_griegos)
+                val opcionGriegos = stringResource(R.string.submenu_modos_griegos)
 
                 // Contenido específico del submenu
                 when (submenuActivo) {
-                    opcionCiclo -> {
+                    opcionJonicos -> {
                         Text(
-                            text = stringResource(R.string.descripcion_ciclo_quintas),
+                            text = stringResource(R.string.descripcion_modos_jonicos),
                             fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { navController.navigate("teoria_ciclos") }) {
+                        Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_JONICOS) }) {
                             Text(stringResource(R.string.ir_a_teoria))
                         }
                     }
@@ -215,7 +215,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                         }
                     }
 
-                    opcionModos -> {
+                    opcionGriegos -> {
                         Text(
                             text = stringResource(R.string.descripcion_modos_griegos),
                             fontSize = 14.sp

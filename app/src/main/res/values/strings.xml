@@ -58,7 +58,9 @@
 
 
     <!-- pantalla principal-->
-    <string name="submenu_ciclo_quintas">Ciclo de 5ª/4ª</string>
+    <string name="submenu_modos_jonicos">Modos jónicos</string>
+
+
     <string name="submenu_armadura">Armadura armónica</string>
     <string name="submenu_modos_griegos">Modos griegos</string>
     <string name="descripcion_fondo_mastil">Fondo mástil</string>
@@ -76,8 +78,8 @@
     <string name="nota_info_f">La nota F (fa) es semitono de E y aparece justo después en muchas cuerdas.</string>
     <string name="nota_info_default">Selecciona una nota para ver su información.</string>
 
-    <string name="descripcion_ciclo_quintas">El ciclo de quintas/cuarta se usa para visualizar relaciones entre tonalidades.</string>
     <string name="ir_a_teoria">Ir a teoría</string>
+    <string name="descripcion_modos_jonicos">Los modos jónicos se basan en la escala mayor y ofrecen un sonido brillante y estable.</string>
     <string name="descripcion_armadura">La armadura de clave indica las alteraciones presentes en una tonalidad.</string>
     <string name="descripcion_modos_griegos">Los modos griegos son escalas con diferentes sensaciones armónicas.</string>
 
@@ -86,9 +88,52 @@
     <string name="titulo_pantalla_principal">Pantalla Principal</string>
     <string name="instruccion_tocar_cuerda">← Toca una cuerda</string>
 
-    <!-- -->
-    <!-- -->
-    <!-- -->
+
+    <!-- TeoriaModosJonicos-->
+    <string name="volver_pagina_princial">Volver a la página principal</string>
+    <string name="modos_jonicos">Modos Jonicos</string>
+    <string name="descripcion_imagen_griegos1">Diagrama del modo jónico con pentagrama y posiciones en el mástil de la guitarra</string>
+    <string name="escala_jonica">Escala jónica</string>
+    <string name="texto1_modos_jonicos">El modo jónico corresponde a la escala mayor tradicional. Se caracteriza por un sonido estable, brillante y consonante. En la imagen se muestra su construcción desde el primer grado, su representación en notación musical y su distribución a lo largo del mástil de la guitarra, abarcando todas sus posiciones.</string>
+
+    <string name="raiz_bordon">Acordes jónicos con raíz en bordón</string>
+    <string name="explicacion_raiz_bordon">En esta imagen se muestran varios acordes construidos sobre la tonalidad jónica con la raíz en la sexta cuerda (bordón). Partiendo del acorde G (sol mayor), se presentan variaciones como Gadd9, G6 o Gmaj7, que añaden diferentes colores armónicos manteniendo la misma raíz. Estos acordes permiten explorar el sonido del modo jónico en distintas combinaciones.</string>
+    <string name="descripcion_imagen_acordes_jonicos_raiz_bordon">imagen acordes jonicos raíz bordón</string>
+
+    <string name="acordes_jonicos_raiz_quinta">Acordes jónicos con raíz en quinta</string>
+    <string name="explicacion_raiz_quinta">A continuación se muestran acordes basados en la tonalidad jónica con la raíz en la quinta cuerda (la cuerda A). A partir del acorde C (do mayor), se presentan variantes como Cadd9, C6 o Cmaj7, cada una aportando un matiz armónico diferente sin cambiar la nota raíz. Estas posiciones permiten tocar acordes en modo jónico partiendo desde una raíz en la quinta cuerda, ampliando las posibilidades expresivas dentro de esta sonoridad</string>
+    <string name="descripcion_imagen_acordes_raiz_en_quinta">Diagramas de acordes en modo jónico con raíz en la quinta cuerda, incluyendo variaciones del acorde C como Cadd9, C6, Cmaj7, CM7(9) y CM7(13)</string>
+
+    <string name="acordes_jonicos_raiz_cuarta">Acordes jónicos con raíz en cuarta</string>
+    <string name="explicacion_raiz_cuarta">Por ultimo podemos observar los diferentes acordes jónicos construidos con la raíz en la cuarta cuerda (re). A partir del acorde F (fa mayor), se muestran variantes como Fadd9, F6, Fmaj7, FM7(9) y FM7(13), que aportan matices armónicos adicionales manteniendo la nota raíz. Estas posiciones permiten desarrollar progresiones más ricas y explorar el modo jónico en registros medios del mástil</string>
+    <string name="descripcion_imagen_acordes_raiz_en_cuarta">Acordes jónicos con raíz en la cuarta cuerda: variaciones del acorde F mayor incluyendo Fadd9, F6, Fmaj7, FM7(9) y FM7(13)</string>
+    <string name="ir_a_actividad">Ir a la actividad</string>
+
+
+    <!--teoria armadura -->
+    <string name="armadura">Armadura armónica</string>
+    <string name="ciclo_de_quintas">Ciclo de quintas</string>
+    <string name="explicacion_1_armadura">El ciclo de quintas nos muestra cuántos sostenidos tiene cada armadura. Para saber en qué tonalidad Jónica (mayor) está escrita una pieza, se puede observar cuántos sostenidos aparecen y consultarlo en el siguiente gráfico.</string>
+    <string name="descripcion_ciclo_quintas1">Ciclo de quintas 1</string>
+    <string name="descripcion_ciclo_quintas2">Ciclo de quintas 2</string>
+    <string name="explicacion_armadura2">En caso de que la tonalidad use bemoles en lugar de sostenidos, podemos guiarnos por este otro gráfico:</string>
+    <string name="descripcion_armadura_ciclo_cuartas">imagen armadura ciclo de cuartas</string>
+    <string name="descripcion_armadura_bemoles">imagen armadura bemoles</string>
+    <string name="modos_griegos">Modos Griegos</string>
+    <string name="explicacion1_modos_griegos">Los modos griegos son escalas que se forman a partir de las notas de una tonalidad mayor, comenzando desde cada uno de sus grados. Cada modo tiene su propia sonoridad y uso característico en la música moderna y clásica.</string>
+    <string name="descripcion_imagen_escalas">Modos griegos - escalas</string>
+    <string name="modo_jonico_grado1">Modo Jónico (I grado)</string>
+    <string name="explicacion_modos_griegos2">Cada modo griego tiene una estructura de intervalos propia. En esta imagen se muestra la armadura de cada modo, es decir, las notas que lo componen cuando parten desde su nota característica, manteniéndose dentro de la tonalidad de Do mayor.</string>
+    <string name="descripcion_armadura_modos_griegos">Armaduras de los modos griegos</string>
+    <string name="explicacion_modos_griegos3">Una forma habitual de aplicar los modos griegos es armonizar la escala mayor con acordes de séptima (tétradas). Aquí vemos los acordes que corresponden a cada grado de la escala de Do mayor, y cómo cada uno está asociado a un modo.</string>
+    <string name="descripcion_armonizacion_acordes">Armonización en acordes de séptima</string>
+    <string name="explicacion_modos_griegos4">Esta representación en el mástil muestra cómo se distribuyen las notas de cada modo griego en el diapasón. Cada fila corresponde a un modo, y cada columna a una posición en la guitarra, relacionando grados y acordes.</string>
+    <string name="descripcion_modos_diapason">Modos en el diapasón de la guitarra</string>
+    <string name="acordes_en_do_mayor">Acordes en Do mayor</string>
+    <string name="modos_griegos_mastil">Modos griegos en el mástil de la guitarra</string>
+
+    <!--Teoria modos griegos -->
+
     <!-- -->
 
 </resources>
