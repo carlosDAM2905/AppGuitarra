@@ -145,7 +145,7 @@ fun TeoriaModosGriegos (navController: NavController) {
 
         // Botón para volver al inicio
         OutlinedButton(
-            onClick = { navController.navigate(Rutas.PRINCIPAL) },
+            onClick = { navController.navigate("principal") },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
@@ -153,17 +153,6 @@ fun TeoriaModosGriegos (navController: NavController) {
             Text("Volver a la página principal")
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
