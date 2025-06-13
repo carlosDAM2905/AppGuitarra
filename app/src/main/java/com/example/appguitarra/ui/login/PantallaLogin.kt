@@ -8,6 +8,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -28,6 +29,8 @@ fun PantallaLogin(
     val db = remember { AppDatabase.getDatabase(contexto) }
     val scope = rememberCoroutineScope()
 
+
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var mensajeError by remember { mutableStateOf("") }
@@ -47,13 +50,13 @@ fun PantallaLogin(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_guitarra),
-                contentDescription = "Logo de Guitarrapp",
+                contentDescription = stringResource(R.string.descripcion_logo_guitarrapp),
                 modifier = Modifier
                     .height(60.dp)
                     .padding(end = 12.dp)
             )
             Text(
-                "Guitarrapp",
+                stringResource(R.string.nombre_app),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF153B59)
@@ -79,7 +82,7 @@ fun PantallaLogin(
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("Correo electrónico") },
+                    label = { Text(stringResource(R.string.correo_electronico)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     textStyle = TextStyle(color = Color.Black)
@@ -90,7 +93,7 @@ fun PantallaLogin(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Contraseña") },
+                    label = { Text(stringResource(R.string.contraseña)) },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth(),
@@ -102,7 +105,8 @@ fun PantallaLogin(
                 Button(
                     onClick = {
                         if (email.isBlank() || password.isBlank()) {
-                            mensajeError = "Rellena todos los campos"
+
+                            mensajeError = contexto.getString(R.string.error_campos_vacios)
                         } else {
                             scope.launch(Dispatchers.IO) {
                                 val usuario = db.usuarioDao().login(email, password)
@@ -113,7 +117,7 @@ fun PantallaLogin(
                                     }
                                 } else {
                                     withContext(Dispatchers.Main) {
-                                        mensajeError = "Correo o contraseña incorrectos"
+                                        mensajeError = contexto.getString(R.string.error_credenciales)
                                     }
                                 }
                             }
@@ -121,7 +125,7 @@ fun PantallaLogin(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Iniciar Sesión")
+                    Text(stringResource(R.string.iniciar_sesion))
                 }
 
                 if (mensajeError.isNotEmpty()) {
@@ -135,7 +139,7 @@ fun PantallaLogin(
         Spacer(modifier = Modifier.height(16.dp))
 
         TextButton(onClick = onRegistroClick) {
-            Text("¿No tienes cuenta? Regístrate")
+            Text(stringResource(R.string.no_tienes_cuenta))
         }
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ data class PreguntaModosGriegos(
     val imagen: Int,
     val opciones: List<String>,
     val correcta: String,
-    val explicacion: String
+    val explicacion: Int //modificado para evitar hardcodeo
 )
 
 val preguntasModosGriegos = listOf(
@@ -37,37 +38,37 @@ val preguntasModosGriegos = listOf(
         R.drawable.dorico,
         listOf("Jónico", "Dórico", "Frigio"),
         correcta = "Dórico",
-        explicacion = "El acorde Dm7 se forma sobre el segundo grado (II) de la escala de Do mayor, lo que corresponde al modo Dórico."
+        explicacion = R.string.explicacion_modo_1
     ),
     PreguntaModosGriegos(
         R.drawable.eolico,
         listOf("Eólico", "Locrio", "Jónico"),
         correcta = "Eólico",
-        explicacion = "El modo Eólico se construye sobre el sexto grado (VI) de la escala mayor. En la tonalidad de Do, el sexto grado es La, y su acorde correspondiente es Am7."
+        explicacion = R.string.explicacion_modo_2
     ),
     PreguntaModosGriegos(
         R.drawable.lidio,
         listOf("Mixolidio", "Lidio", "Frigio"),
         correcta = "Lidio",
-        explicacion = "El modo Lidio se construye sobre el cuarto grado (IV) de la escala mayor. En la tonalidad de Do, el cuarto grado es Fa, y su acorde correspondiente es FM7."
+        explicacion = R.string.explicacion_modo_3
     ),
     PreguntaModosGriegos(
         R.drawable.mixolidio,
         listOf("Eólico", "Locrio", "Mixolidio"),
         correcta = "Mixolidio",
-        explicacion = "El modo Mixolidio se construye sobre el quinto grado (V) de la escala mayor. En la tonalidad de Do, ese grado es Sol, y su acorde correspondiente es G7."
+        explicacion = R.string.explicacion_modo_4
     ),
     PreguntaModosGriegos(
         R.drawable.locrio,
         listOf("Frigio", "Locrio", "Dórico"),
         correcta = "Locrio",
-        explicacion = "El modo Locrio se construye sobre el séptimo grado (VII) de la escala mayor. En la tonalidad de Do, ese grado es Si (B), y el acorde correspondiente es Bm7♭5."
+        explicacion = R.string.explicacion_modo_5
     ),
     PreguntaModosGriegos(
         R.drawable.jonico,
         listOf("Jónico", "Dórico", "Mixolidio"),
         correcta = "Jónico",
-        explicacion = "El modo Jónico se construye sobre el primer grado (I) de la escala mayor. En la tonalidad de Do, ese grado es Do (C), y el acorde correspondiente es Cmaj7."
+        explicacion = R.string.explicacion_modo_6
     )
 )
 
@@ -93,7 +94,9 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = if (aprobado) "🎉 ¡Has superado la actividad!" else "😢 No has alcanzado el mínimo.",
+                text = stringResource(
+                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida,
+                ),
                 fontSize = 22.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -101,7 +104,9 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             )
 
             Text(
-                text = "Has acertado $aciertos/${preguntasModosGriegos.size} preguntas.",
+                text = stringResource(
+                    R.string.actividad_resumen, aciertos, preguntasModosGriegos.size
+                ),
 
                 modifier = Modifier
                     .padding(top = 24.dp)
@@ -124,7 +129,7 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             Button(onClick = {
                 navController.navigate(Rutas.PRINCIPAL)
             }) {
-                Text("Volver al inicio")
+                Text(text = stringResource(R.string.volver_inicio))
             }
         }
 
@@ -137,10 +142,13 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             .padding(16.dp)
     ) {
         Text(
-            text = "Actividad: Identifica el modo griego",
+            text = stringResource(
+                R.string.titulo_actividad_modos_griegos
+            ),
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold
         )
+
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -171,7 +179,8 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                 ) {
                     Image(
                         painter = painterResource(id = pregunta.imagen),
-                        contentDescription = "Modo griego",
+                        contentDescription = stringResource(R.string.descripcion_imagen_modo),
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
@@ -210,7 +219,10 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                     if (mostrarResultado) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = if (esCorrectaPregunta) "✅ ¡Correcto! ${pregunta.explicacion}" else "❌ Incorrecto. ${pregunta.explicacion}",
+                            text = stringResource(
+                                id = if (esCorrecta) R.string.respuesta_correcta else R.string.respuesta_incorrecta,
+                                stringResource(pregunta.explicacion)
+                            ),
                             color = if (esCorrectaPregunta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
                             fontWeight = FontWeight.SemiBold
                         )
@@ -236,7 +248,14 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(if (preguntaActual < preguntasModosGriegos.lastIndex) "Siguiente" else "Finalizar")
+                Text(
+                    text = stringResource(
+                        id = if (preguntaActual < preguntas.lastIndex)
+                            R.string.boton_siguiente
+                        else
+                            R.string.boton_finalizar
+                    )
+                )
             }
         }
     }

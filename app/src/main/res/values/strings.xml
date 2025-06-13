@@ -13,29 +13,45 @@
     <string name="actividad_suspendida">😢 No has alcanzado el mínimo.</string>
 
     <string name="actividad_resumen">Has acertado %1$d de %2$d preguntas.</string>
-
     <string name="volver_inicio">Volver al inicio</string>
-
     <string name="titulo_actividad_armadura">Actividad: Identifica el modo griego</string>
-
     <string name="descripcion_imagen_armadura">Imagen de armadura</string>
-
     <string name="respuesta_correcta">✅ ¡Correcto! %1$s</string>
     <string name="respuesta_incorrecta">❌ Incorrecto. %1$s</string>
-
     <string name="boton_siguiente">Siguiente</string>
     <string name="boton_finalizar">Finalizar</string>
 
 
+    <!--PantallaActividadesModosGriegos -->
+
+    <!-- PantallaActividadModosGriegos -->
+    <string name="explicacion_modo_1">El acorde Dm7 se forma sobre el segundo grado (II) de la escala de Do mayor, lo que corresponde al modo Dórico.</string>
+    <string name="explicacion_modo_2">El modo Eólico se construye sobre el sexto grado (VI) de la escala mayor. En la tonalidad de Do, el sexto grado es La, y su acorde correspondiente es Am7.</string>
+    <string name="explicacion_modo_3">El modo Lidio se construye sobre el cuarto grado (IV) de la escala mayor. En la tonalidad de Do, el cuarto grado es Fa, y su acorde correspondiente es FM7.</string>
+    <string name="explicacion_modo_4">El modo Mixolidio se construye sobre el quinto grado (V) de la escala mayor. En la tonalidad de Do, ese grado es Sol, y su acorde correspondiente es G7.</string>
+    <string name="explicacion_modo_5">El modo Locrio se construye sobre el séptimo grado (VII) de la escala mayor. En la tonalidad de Do, ese grado es Si (B), y el acorde correspondiente es Bm7♭5.</string>
+    <string name="explicacion_modo_6">El modo Jónico se construye sobre el primer grado (I) de la escala mayor. En la tonalidad de Do, ese grado es Do (C), y el acorde correspondiente es Cmaj7.</string>
+
+    <string name="titulo_actividad_modos_griegos">Actividad: Identifica el modo griego</string>
+
+    <string name="descripcion_imagen_modo">Modo griego</string>
+    <string name="titulo_actividad_modos">Actividad: Identifica el modo griego</string>
+
+
+    <!-- Login-->
+    <string name="nombre_app">Guitarrapp</string>
+    <string name="descripcion_logo_guitarrapp">Logo de Guitarrapp</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta? Regístrate</string>
+    <string name="error_campos_vacios">Rellena todos los campos</string>
+    <string name="error_credenciales">Correo o contraseña incorrectos</string>
 
 
 
 
 
-
-
-    <!-- -->
-    <!-- -->
     <!-- -->
     <!-- -->
     <!-- -->
