@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Density
 
@@ -58,7 +59,14 @@ fun PantallaPrincipal(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    listOf("Ciclo de 5ª/4ª", "Armadura armónica", "Modos griegos").forEach { item ->
+
+                    val opcionesSubmenu = listOf(
+                        stringResource(R.string.submenu_ciclo_quintas),
+                        stringResource(R.string.submenu_armadura),
+                        stringResource(R.string.submenu_modos_griegos)
+                    )
+
+                    opcionesSubmenu.forEach { item ->
                         val isSelected = submenuActivo == item
                         Button(
                             onClick = { submenuActivo = item },
@@ -95,7 +103,7 @@ fun PantallaPrincipal(navController: NavHostController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.mastil_fondo),
-                    contentDescription = "Fondo mástil",
+                    contentDescription = stringResource(R.string.descripcion_fondo_mastil),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .width(180.dp)
@@ -146,9 +154,15 @@ fun PantallaPrincipal(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Explicación de nota
+                val mensajeNota = if (notaSeleccionada.isNotEmpty()) {
+                    stringResource(R.string.nota_en_diapason, notaSeleccionada)
+                } else {
+                    stringResource(R.string.pulsa_una_nota)
+                }
+
+                //Explicación de nota
                 Text(
-                    text = if (notaSeleccionada.isNotEmpty()) "$notaSeleccionada – Nota en el diapasón" else "Pulsa una nota",
+                    text = mensajeNota,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF153B59)
@@ -158,14 +172,14 @@ fun PantallaPrincipal(navController: NavHostController) {
 
                 Text(
                     text = when (notaSeleccionada) {
-                        "E" -> "La nota E (mi) se encuentra en varias cuerdas y es fundamental en la afinación estándar."
-                        "A" -> "La nota A (la) también es parte de la afinación estándar, ubicada en la quinta cuerda."
-                        "D" -> "La nota D (re) se sitúa en la cuarta cuerda abierta y aparece en muchas posiciones."
-                        "G" -> "La nota G (sol) se encuentra abierta en la tercera cuerda."
-                        "B" -> "La nota B (si) está en la segunda cuerda al aire."
-                        "C" -> "La nota C (do) es frecuente en escalas mayores y se encuentra en varios trastes."
-                        "F" -> "La nota F (fa) es semitono de E y aparece justo después en muchas cuerdas."
-                        else -> "Selecciona una nota para ver su información."
+                        "E" -> stringResource(R.string.nota_info_e)
+                        "A" -> stringResource(R.string.nota_info_a)
+                        "D" -> stringResource(R.string.nota_info_d)
+                        "G" -> stringResource(R.string.nota_info_g)
+                        "B" -> stringResource(R.string.nota_info_b)
+                        "C" -> stringResource(R.string.nota_info_c)
+                        "F" -> stringResource(R.string.nota_info_f)
+                        else -> stringResource(R.string.nota_info_default)
                     },
                     fontSize = 14.sp,
                     color = Color(0xFF3E5060)
@@ -173,38 +187,42 @@ fun PantallaPrincipal(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                val opcionCiclo = stringResource(R.string.submenu_ciclo_quintas)
+                val opcionArmadura = stringResource(R.string.submenu_armadura)
+                val opcionModos = stringResource(R.string.submenu_modos_griegos)
+
                 // Contenido específico del submenu
                 when (submenuActivo) {
-                    "Ciclo de 5ª/4ª" -> {
+                    opcionCiclo -> {
                         Text(
-                            "El ciclo de quintas/cuarta se usa para visualizar relaciones entre tonalidades.",
+                            text = stringResource(R.string.descripcion_ciclo_quintas),
                             fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate("teoria_ciclos") }) {
-                            Text("Ir a teoría")
+                            Text(stringResource(R.string.ir_a_teoria))
                         }
                     }
 
-                    "Armadura armónica" -> {
+                    opcionArmadura -> {
                         Text(
-                            "La armadura de clave indica las alteraciones presentes en una tonalidad.",
+                            text = stringResource(R.string.descripcion_armadura),
                             fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate(Rutas.TEORIA_ARMADURA) }) {
-                            Text("Ir a teoría")
+                            Text(stringResource(R.string.ir_a_teoria))
                         }
                     }
 
-                    "Modos griegos" -> {
+                    opcionModos -> {
                         Text(
-                            "Los modos griegos son escalas con diferentes sensaciones armónicas.",
+                            text = stringResource(R.string.descripcion_modos_griegos),
                             fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_GRIEGOS) }) {
-                            Text("Ir a teoría")
+                            Text(stringResource(R.string.ir_a_teoria))
                         }
                     }
                 }

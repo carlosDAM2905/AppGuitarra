@@ -5,9 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.appguitarra.R
 import com.example.appguitarra.data.AppDatabase
 import com.example.appguitarra.model.Usuario
 import kotlinx.coroutines.Dispatchers
@@ -34,14 +36,17 @@ fun PantallaRegistro(
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Registro", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            stringResource(R.string.titulo_registro),
+            style = MaterialTheme.typography.headlineMedium
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
-            label = { Text("Nombre") },
+            label = { Text(stringResource(R.string.nombre_usuario)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -50,7 +55,7 @@ fun PantallaRegistro(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Correo electrónico") },
+            label = { Text(stringResource(R.string.correo_electronico)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -59,7 +64,7 @@ fun PantallaRegistro(
         OutlinedTextField(
             value = contraseña,
             onValueChange = { contraseña = it },
-            label = { Text("Contraseña") },
+            label = { Text(stringResource(R.string.contraseña)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
@@ -69,12 +74,12 @@ fun PantallaRegistro(
         Button(
             onClick = {
                 if (nombre.isBlank() || email.isBlank() || contraseña.isBlank()) {
-                    mensajeError = "Rellena todos los campos"
+                    mensajeError = contexto.getString(R.string.error_campos_vacios)
                 } else {
                     scope.launch(Dispatchers.IO) {
                         val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
                         if (usuarioExistente != null) {
-                            mensajeError = "Ya existe un usuario con este email"
+                            mensajeError = contexto.getString(R.string.error_usuario_existente)
                         } else {
                             db.usuarioDao().insertar(
                                 Usuario(
@@ -95,7 +100,7 @@ fun PantallaRegistro(
 
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Registrarse")
+            Text(stringResource(R.string.boton_registrarse))
         }
 
         Button(
@@ -106,7 +111,7 @@ fun PantallaRegistro(
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Volver al inicio de sesión")
+            Text(stringResource(R.string.boton_volver_login))
 
 
         }

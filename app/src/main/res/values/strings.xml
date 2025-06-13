@@ -47,12 +47,45 @@
     <string name="no_tienes_cuenta">¿No tienes cuenta? Regístrate</string>
     <string name="error_campos_vacios">Rellena todos los campos</string>
     <string name="error_credenciales">Correo o contraseña incorrectos</string>
+    <!--Pantalla registro -->
 
 
+    <string name="titulo_registro">Registro</string>
+    <string name="nombre_usuario">Nombre</string>
+    <string name="boton_registrarse">Registrarse</string>
+    <string name="boton_volver_login">Volver al inicio de sesión</string>
+    <string name="error_usuario_existente">Ya existe un usuario con este email</string>
 
 
+    <!-- pantalla principal-->
+    <string name="submenu_ciclo_quintas">Ciclo de 5ª/4ª</string>
+    <string name="submenu_armadura">Armadura armónica</string>
+    <string name="submenu_modos_griegos">Modos griegos</string>
+    <string name="descripcion_fondo_mastil">Fondo mástil</string>
 
-    <!-- -->
+    <string name="nota_en_diapason">%1$s – Nota en el diapasón</string>
+    <string name="pulsa_una_nota">Pulsa una nota</string>
+    <string name="mensaje_nota_seleccionada">%1$s – Nota en el diapasón</string>
+
+    <string name="nota_info_e">La nota E (mi) se encuentra en varias cuerdas y es fundamental en la afinación estándar.</string>
+    <string name="nota_info_a">La nota A (la) también es parte de la afinación estándar, ubicada en la quinta cuerda.</string>
+    <string name="nota_info_d">La nota D (re) se sitúa en la cuarta cuerda abierta y aparece en muchas posiciones.</string>
+    <string name="nota_info_g">La nota G (sol) se encuentra abierta en la tercera cuerda.</string>
+    <string name="nota_info_b">La nota B (si) está en la segunda cuerda al aire.</string>
+    <string name="nota_info_c">La nota C (do) es frecuente en escalas mayores y se encuentra en varios trastes.</string>
+    <string name="nota_info_f">La nota F (fa) es semitono de E y aparece justo después en muchas cuerdas.</string>
+    <string name="nota_info_default">Selecciona una nota para ver su información.</string>
+
+    <string name="descripcion_ciclo_quintas">El ciclo de quintas/cuarta se usa para visualizar relaciones entre tonalidades.</string>
+    <string name="ir_a_teoria">Ir a teoría</string>
+    <string name="descripcion_armadura">La armadura de clave indica las alteraciones presentes en una tonalidad.</string>
+    <string name="descripcion_modos_griegos">Los modos griegos son escalas con diferentes sensaciones armónicas.</string>
+
+
+    <!-- PantallaPrincipalImagen-->
+    <string name="titulo_pantalla_principal">Pantalla Principal</string>
+    <string name="instruccion_tocar_cuerda">← Toca una cuerda</string>
+
     <!-- -->
     <!-- -->
     <!-- -->
