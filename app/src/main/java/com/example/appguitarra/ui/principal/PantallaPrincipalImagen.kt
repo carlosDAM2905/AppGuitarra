@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -24,7 +25,7 @@ fun PantallaPrincipalImagen() {
     ) {
         // Título
         Text(
-            text = "Pantalla Principal",
+            text = stringResource(R.string.titulo_pantalla_principal),
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -42,12 +43,7 @@ fun PantallaPrincipalImagen() {
                     .weight(2.5f)
                     .fillMaxHeight()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.mastil_completo),
-                    contentDescription = "Mástil de guitarra",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.fillMaxSize()
-                )
+
 
                 Row(
                     modifier = Modifier
@@ -78,7 +74,7 @@ fun PantallaPrincipalImagen() {
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "← Toca una cuerda", fontSize = 16.sp)
+                Text(text = stringResource(R.string.instruccion_tocar_cuerda), fontSize = 16.sp)
             }
         }
     }

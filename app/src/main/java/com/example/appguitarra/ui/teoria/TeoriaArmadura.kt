@@ -13,13 +13,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,34 +47,49 @@ fun TeoriaArmadura(navController: NavController) {
     ) {
 
         Text(
-            text = "Teoría Armaduras",
+            text = "Armadura armónica",
             fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier
+                .padding(top = 16.dp, bottom = 16.dp)
         )
         Text(
-            text = "CICLO DE QUINTAS",
+            text = "Ciclo de quintas",
             fontSize = 24.sp,
-            textAlign = TextAlign.Center
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 12.dp)
+
         )
 
         Text(
-            text = "Es el número de sostenidos o de bemoles que tiene una escala Jónica. Para averiguar en que Jónica se está ejecutando un tema, hemos de observar el siguiente gráfico para los sostenidos",
+            text = "El ciclo de quintas nos muestra cuántos sostenidos tiene cada armadura. Para saber en qué tonalidad Jónica (mayor) está escrita una pieza, se puede observar cuántos sostenidos aparecen y consultarlo en el siguiente gráfico.",
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         Image(
-            painter = painterResource(id = R.drawable.ciclo_de_quintas),
-            contentDescription = "imagen armadura ciclo de quintas",
+            painter = painterResource(id = R.drawable.ciclo_de_quintas1),
+            contentDescription = "Ciclo de quintas 1",
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(460.dp)
-                .padding(vertical = 8.dp)
+                .padding(bottom = 24.dp)
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.ciclo_de_quintas2),
+            contentDescription = "ciclo de quintas 2",
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp)
         )
 
         Text(
-            text = "Para averiguar en que Jónica se está ejecutando un tema, hemos de observar el siguiente gráfico para los bemoles",
+            text = "En caso de que la tonalidad use bemoles en lugar de sostenidos, podemos guiarnos por este otro gráfico:",
             fontSize = 16.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -81,10 +99,19 @@ fun TeoriaArmadura(navController: NavController) {
         Image(
             painter = painterResource(id = R.drawable.ciclo_de_cuartas),
             contentDescription = "imagen armadura ciclo de cuartas",
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(460.dp)
-                .padding(vertical = 8.dp)
+                .padding(vertical = 16.dp)
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.armadura_bemoles),
+            contentDescription = "imagen armadura bemoles",
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -100,7 +127,7 @@ fun TeoriaArmadura(navController: NavController) {
         }
 
         // Divider entre botones
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .padding(vertical = 16.dp)
                 .fillMaxWidth(),
@@ -119,11 +146,6 @@ fun TeoriaArmadura(navController: NavController) {
         }
     }
 }
-
-
-
-
-
 
 
 @Composable

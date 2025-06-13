@@ -1,6 +1,8 @@
 package com.example.appguitarra.ui.actividades
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.with
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -18,78 +20,71 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.appguitarra.R
 import com.example.appguitarra.navigation.Rutas
 
-// Modelo de pregunta
-data class PreguntaArmadura(
+import com.airbnb.lottie.compose.* // animacion
+
+
+data class PreguntaModosGriegos(
     val imagen: Int,
     val opciones: List<String>,
     val correcta: String,
-    val explicacion: Int
+    val explicacion: Int //modificado para evitar hardcodeo
 )
 
-// Lista de preguntas
-val preguntas = listOf(
-    PreguntaArmadura(
-        R.drawable.armadura_3_sostenidos,
-        listOf("G", "D", "A"),
-        "A",
-        R.string.explicacion_pregunta1
+val preguntasModosGriegos = listOf(
+    PreguntaModosGriegos(
+        R.drawable.dorico,
+        listOf("Jónico", "Dórico", "Frigio"),
+        correcta = "Dórico",
+        explicacion = R.string.explicacion_modo_1
     ),
-    PreguntaArmadura(
-        R.drawable.armadura_2_sostenidos,
-        listOf("E", "D", "C"),
-        "D",
-        R.string.explicacion_pregunta2
+    PreguntaModosGriegos(
+        R.drawable.eolico,
+        listOf("Eólico", "Locrio", "Jónico"),
+        correcta = "Eólico",
+        explicacion = R.string.explicacion_modo_2
     ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_ab,
-        listOf("Ab", "Bb", "F"),
-        "Ab",
-        R.string.explicacion_pregunta3
+    PreguntaModosGriegos(
+        R.drawable.lidio,
+        listOf("Mixolidio", "Lidio", "Frigio"),
+        correcta = "Lidio",
+        explicacion = R.string.explicacion_modo_3
     ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_eb,
-        listOf("Eb", "F", "Bb"),
-        "Eb",
-        R.string.explicacion_pregunta4
+    PreguntaModosGriegos(
+        R.drawable.mixolidio,
+        listOf("Eólico", "Locrio", "Mixolidio"),
+        correcta = "Mixolidio",
+        explicacion = R.string.explicacion_modo_4
     ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_f,
-        listOf("C", "F", "G"),
-        "F",
-        R.string.explicacion_pregunta5
+    PreguntaModosGriegos(
+        R.drawable.locrio,
+        listOf("Frigio", "Locrio", "Dórico"),
+        correcta = "Locrio",
+        explicacion = R.string.explicacion_modo_5
     ),
-    PreguntaArmadura(
-        R.drawable.true_false,
-        listOf("Verdadero", "Falso"),
-        "Falso",
-        R.string.explicacion_pregunta6
+    PreguntaModosGriegos(
+        R.drawable.jonico,
+        listOf("Jónico", "Dórico", "Mixolidio"),
+        correcta = "Jónico",
+        explicacion = R.string.explicacion_modo_6
     )
-
-
 )
+
 
 @Composable
-fun PantallaActividadArmadura(navController: NavController) {
+fun PantallaActividadModosGriegos(navController: NavController) {
     var preguntaActual by remember { mutableStateOf(0) }
     var respuestaSeleccionada by remember { mutableStateOf<String?>(null) }
     var mostrarResultado by remember { mutableStateOf(false) }
-
     var aciertos by remember { mutableStateOf(0) }
     var finalizado by remember { mutableStateOf(false) }
 
-    val pregunta = preguntas[preguntaActual]
-    val esCorrecta = respuestaSeleccionada == pregunta.correcta
+    val esCorrecta = respuestaSeleccionada == preguntasModosGriegos[preguntaActual].correcta
 
     if (finalizado) {
-        val aprobado = aciertos >= preguntas.size / 2
+        val aprobado = aciertos >= preguntasModosGriegos.size / 2
 
         Column(
             modifier = Modifier
@@ -98,21 +93,21 @@ fun PantallaActividadArmadura(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Título
             Text(
                 text = stringResource(
-                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida
+                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida,
                 ),
                 fontSize = 22.sp,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = if (aprobado) Color(0xFF1A6D1A) else Color(0xFFAF1E1E)
             )
 
             Text(
                 text = stringResource(
-                    R.string.actividad_resumen, aciertos, preguntas.size
-
+                    R.string.actividad_resumen, aciertos, preguntasModosGriegos.size
                 ),
+
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth(),
@@ -124,9 +119,9 @@ fun PantallaActividadArmadura(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             if (aprobado) {
-                ConfetiAnimacion2(modifier = Modifier.size(300.dp))
+                ConfetiAnimacion(modifier = Modifier.size(300.dp))
                 Spacer(modifier = Modifier.height(16.dp))
-                Guitarrista2Animacion(modifier = Modifier.size(200.dp))
+                GuitarristaAnimacion(modifier = Modifier.size(200.dp))
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -147,10 +142,13 @@ fun PantallaActividadArmadura(navController: NavController) {
             .padding(16.dp)
     ) {
         Text(
-            text = stringResource(R.string.titulo_actividad_armadura),
+            text = stringResource(
+                R.string.titulo_actividad_modos_griegos
+            ),
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold
         )
+
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -161,16 +159,15 @@ fun PantallaActividadArmadura(navController: NavController) {
             },
             label = "TransiciónPregunta"
         ) { index ->
-            val pregunta = preguntas[index]
+            val pregunta = preguntasModosGriegos[index]
             val esCorrectaPregunta = respuestaSeleccionada == pregunta.correcta
 
-            // Pregunta con imagen y fondo dinámico
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
                     containerColor = when {
                         !mostrarResultado -> Color.White
-                        esCorrecta -> Color(0xFFDFF5DD)
+                        esCorrectaPregunta -> Color(0xFFDFF5DD)
                         else -> Color(0xFFFFE6E6)
                     }
                 ),
@@ -182,7 +179,8 @@ fun PantallaActividadArmadura(navController: NavController) {
                 ) {
                     Image(
                         painter = painterResource(id = pregunta.imagen),
-                        contentDescription = stringResource(R.string.descripcion_imagen_armadura),
+                        contentDescription = stringResource(R.string.descripcion_imagen_modo),
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(180.dp)
@@ -225,15 +223,13 @@ fun PantallaActividadArmadura(navController: NavController) {
                                 id = if (esCorrecta) R.string.respuesta_correcta else R.string.respuesta_incorrecta,
                                 stringResource(pregunta.explicacion)
                             ),
-                            color = if (esCorrecta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
+                            color = if (esCorrectaPregunta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
                             fontWeight = FontWeight.SemiBold
                         )
                     }
-
                 }
             }
         }
-
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -242,7 +238,7 @@ fun PantallaActividadArmadura(navController: NavController) {
                 onClick = {
                     if (esCorrecta) aciertos++
 
-                    if (preguntaActual < preguntas.lastIndex) {
+                    if (preguntaActual < preguntasModosGriegos.lastIndex) {
                         preguntaActual++
                         respuestaSeleccionada = null
                         mostrarResultado = false
@@ -260,14 +256,13 @@ fun PantallaActividadArmadura(navController: NavController) {
                             R.string.boton_finalizar
                     )
                 )
-
             }
         }
     }
 }
 
 @Composable
-fun ConfetiAnimacion2(modifier: Modifier = Modifier) {
+fun ConfetiAnimacion(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
     val progress by animateLottieCompositionAsState(
         composition
@@ -283,8 +278,8 @@ fun ConfetiAnimacion2(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Guitarrista2Animacion(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista_woman.json"))
+fun GuitarristaAnimacion(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista.json"))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever
@@ -296,3 +291,6 @@ fun Guitarrista2Animacion(modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
+
+
+

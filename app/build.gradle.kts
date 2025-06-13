@@ -60,6 +60,11 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.foundation.layout.android)
+
+    implementation(libs.lottie.compose)
+    implementation(libs.androidx.appcompat) //para el confeti de las respuestas
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
