@@ -36,7 +36,7 @@ com.example.appguitarra/
 ├── data/                  → Entidades, DAOs y base de datos Room
 ├── navigation/            → Gestión de rutas entre pantallas
 ├── ui/                    
-│   ├── principal/         → Pantalla de inicio con el rosco de progreso
+│   ├── principal/         → Pantalla de inicio con el mástil, botones y rosco de progreso
 │   ├── teoria/            → Pantallas teóricas ilustradas
 │   ├── actividades/       → Actividades interactivas tipo test
 │   └── components/        → Componentes visuales reutilizables
