@@ -276,7 +276,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Box(modifier = Modifier.padding(top = 32.dp)) {
+                Box(modifier = Modifier.padding(top = 16.dp)) {
                     RoscoProgreso(
                         porcentaje = porcentajeProgreso,
                         texto = stringResource(R.string.progreso_total_del_curso)
@@ -349,7 +349,7 @@ fun RoscoProgreso(porcentaje: Float, texto: String = "Progreso de esta actividad
         CircularProgressIndicator(
             progress = { progresoAnimado },
             modifier = Modifier
-                .size(120.dp),
+                .size(100.dp),
             color = Color(0xFF1A6D1A),
             strokeWidth = 10.dp,
         )
