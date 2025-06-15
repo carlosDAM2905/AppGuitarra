@@ -126,7 +126,7 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                     if (usuario != null) {
                         val db = AppDatabase.getDatabase(context)
                         val contenido =
-                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.ARMADURA_ARMONICA)
+                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.MODOS_GRIEGOS)
                         if (contenido != null) {
                             val progresoExistente = db.progresoDao().obtenerProgreso(usuario.id, contenido.id)
 
@@ -147,7 +147,7 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                         } else {
                             Log.e(
                                 "Progreso",
-                                "Contenido no encontrado: ${TitulosContenido.ARMADURA_ARMONICA}"
+                                "Contenido no encontrado: ${TitulosContenido.MODOS_GRIEGOS}"
                             ) // si no se guarda el contenido lo vemos en el logcat
                         }
 

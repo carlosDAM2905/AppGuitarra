@@ -125,7 +125,7 @@ fun PantallaActividadModosJonicos(navController: NavController) {
                     if (usuario != null) {
                         val db = AppDatabase.getDatabase(context)
                         val contenido =
-                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.ARMADURA_ARMONICA)
+                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.MODOS_JONICOS)
                         if (contenido != null) {
                             val progresoExistente = db.progresoDao().obtenerProgreso(usuario.id, contenido.id)
 
@@ -146,7 +146,7 @@ fun PantallaActividadModosJonicos(navController: NavController) {
                         } else {
                             Log.e(
                                 "Progreso",
-                                "Contenido no encontrado: ${TitulosContenido.ARMADURA_ARMONICA}"
+                                "Contenido no encontrado: ${TitulosContenido.MODOS_JONICOS}"
                             ) // si no se guarda el contenido lo vemos en el logcat
                         }
 
