@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 
 import com.example.appguitarra.ui.actividades.PantallaActividadArmadura
 import com.example.appguitarra.ui.actividades.PantallaActividadModosGriegos
+import com.example.appguitarra.ui.actividades.PantallaActividadModosJonicos
 import com.example.appguitarra.ui.login.PantallaRegistro
 import com.example.appguitarra.ui.principal.PantallaPrincipal
 import com.example.appguitarra.ui.teoria.TeoriaArmadura
@@ -92,6 +93,9 @@ fun Navegacion(navController: NavHostController) {
         }
 
         composable(Rutas.MODOS_JONICOS_ACTIVIDAD) {
+            PantallaActividadModosJonicos(
+                navController
+            )
 
         }
 

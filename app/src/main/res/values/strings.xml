@@ -10,11 +10,11 @@
     <string name="explicacion_pregunta6">La afirmación sobre Ab es incorrecta: Ab tiene cuatro bemoles, no dos. Por tanto, la imagen contiene un error.</string>
 
     <string name="actividad_aprobada">🎉 ¡Has superado la actividad!</string>
-    <string name="actividad_suspendida">😢 No has alcanzado el mínimo.</string>
+    <string name="actividad_suspendida">😢 No has alcanzado el mínimo</string>
 
-    <string name="actividad_resumen">Has acertado %1$d de %2$d preguntas.</string>
+    <string name="actividad_resumen">Has acertado %1$d de %2$d preguntas</string>
     <string name="volver_inicio">Volver al inicio</string>
-    <string name="titulo_actividad_armadura">Actividad: Identifica el modo griego</string>
+    <string name="titulo_actividad_armadura">Actividad: Identifica la armadura</string>
     <string name="descripcion_imagen_armadura">Imagen de armadura</string>
     <string name="respuesta_correcta">✅ ¡Correcto! %1$s</string>
     <string name="respuesta_incorrecta">❌ Incorrecto. %1$s</string>
@@ -39,6 +39,7 @@
 
 
     <!-- Login-->
+    <string name="error_email_no_valido">El correo electrónico no es válido</string>
     <string name="nombre_app">Guitarrapp</string>
     <string name="descripcion_logo_guitarrapp">Logo de Guitarrapp</string>
     <string name="correo_electronico">Correo electrónico</string>
@@ -55,6 +56,7 @@
     <string name="boton_registrarse">Registrarse</string>
     <string name="boton_volver_login">Volver al inicio de sesión</string>
     <string name="error_usuario_existente">Ya existe un usuario con este email</string>
+    <string name="mensaje_contraseña_invalida">La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.</string>
 
 
     <!-- pantalla principal-->
@@ -84,9 +86,16 @@
     <string name="descripcion_modos_griegos">Los modos griegos son escalas con diferentes sensaciones armónicas.</string>
 
 
+
+
+    <string name="porcentaje_completado">Progreso: %1$d%% completado</string> <!-- -->
+
+
+
     <!-- PantallaPrincipalImagen-->
     <string name="titulo_pantalla_principal">Pantalla Principal</string>
     <string name="instruccion_tocar_cuerda">← Toca una cuerda</string>
+    <string name="progreso_total_del_curso">Progreso total del curso</string>
 
 
     <!-- TeoriaModosJonicos-->
@@ -119,6 +128,9 @@
     <string name="explicacion_armadura2">En caso de que la tonalidad use bemoles en lugar de sostenidos, podemos guiarnos por este otro gráfico:</string>
     <string name="descripcion_armadura_ciclo_cuartas">imagen armadura ciclo de cuartas</string>
     <string name="descripcion_armadura_bemoles">imagen armadura bemoles</string>
+
+    <!--Teoria modos griegos -->
+
     <string name="modos_griegos">Modos Griegos</string>
     <string name="explicacion1_modos_griegos">Los modos griegos son escalas que se forman a partir de las notas de una tonalidad mayor, comenzando desde cada uno de sus grados. Cada modo tiene su propia sonoridad y uso característico en la música moderna y clásica.</string>
     <string name="descripcion_imagen_escalas">Modos griegos - escalas</string>
@@ -132,8 +144,40 @@
     <string name="acordes_en_do_mayor">Acordes en Do mayor</string>
     <string name="modos_griegos_mastil">Modos griegos en el mástil de la guitarra</string>
 
-    <!--Teoria modos griegos -->
 
+    <!--PantallaActividadesModosJonicos -->
+
+
+    <string name="pregunta1_modo_jonico_texto">El modo jónico corresponde a la escala mayor tradicional.</string>
+    <string name="explicacion_pregunta_modo_jonico1">El modo jónico es la base de la escala mayor, y se caracteriza por su sonoridad brillante, estable y consonante.</string>
+    <string name="explicacion_pregunta_modo_jonico2">
+La imagen muestra la escala de G jónica (sol mayor), con su armadura característica de un fa#, do# y sol# en el pentagrama. Esto indica claramente que se trata de la tonalidad de G mayor, correspondiente al modo jónico partiendo de G.
+</string>
+
+    <string name="pregunta3_modo_jonico_texto">¿En qué cuerda se encuentran los acordes jónicos construidos a partir del acorde C (do mayor)?</string>
+    <string name="explicacion_pregunta_modo_jonico3">
+Los acordes jónicos con raíz en la quinta cuerda se construyen a partir del acorde C (do mayor), como Cadd9, C6 o Cmaj7.
+</string>
+
+    <string name="explicacion_pregunta_modo_jonico4">
+El acorde mostrado es un G (sol mayor) con raíz en la sexta cuerda, conocido como “bordón”. Es la base para variaciones jónicas como Gadd9 o Gmaj7.
+</string>
+    <string name="explicacion_pregunta_modo_jonico5">
+La imagen muestra una escala con VII♭ (séptimo grado bemol), lo cual no corresponde al modo jónico. El modo jónico tiene un séptimo grado natural.
+</string>
+
+    <string name="explicacion_pregunta_modo_jonico6">
+Este acorde es C (Do mayor), construido con raíz en la quinta cuerda. Forma parte de los acordes jónicos en esta posición, y sirve como base para variaciones como Cadd9 o Cmaj7.
+</string>
+
+    <string name="titulo_actividad_modos_jonicos">Actividad: Identifica el modo jónico</string>
+
+
+
+    <!-- -->
+    <!-- -->
+    <!-- -->
+    <!-- -->
     <!-- -->
 
 </resources>

@@ -1,6 +1,8 @@
 package com.example.appguitarra.ui.login
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -33,6 +35,7 @@ fun PantallaRegistro(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -75,7 +78,8 @@ fun PantallaRegistro(
             onClick = {
                 if (nombre.isBlank() || email.isBlank() || contraseña.isBlank()) {
                     mensajeError = contexto.getString(R.string.error_campos_vacios)
-                } else {
+
+            } else {
                     scope.launch(Dispatchers.IO) {
                         val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
                         if (usuarioExistente != null) {

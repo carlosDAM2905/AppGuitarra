@@ -1,101 +1,100 @@
 package com.example.appguitarra.ui.actividades
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.with
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.R
+import com.example.appguitarra.data.AppDatabase
+import com.example.appguitarra.data.AppSesion
+import com.example.appguitarra.model.Progreso
 import com.example.appguitarra.navigation.Rutas
-
-import com.airbnb.lottie.compose.* // animacion
-
-
-data class PreguntaModosGriegos(
-    val imagen: Int,
-    val opciones: List<String>,
-    val correcta: String,
-    val explicacion: Int //modificado para evitar hardcodeo
-)
-
-val preguntasModosGriegos = listOf(
-    PreguntaModosGriegos(
-        R.drawable.dorico,
-        listOf("Jónico", "Dórico", "Frigio"),
-        correcta = "Dórico",
-        explicacion = R.string.explicacion_modo_1
-    ),
-    PreguntaModosGriegos(
-        R.drawable.eolico,
-        listOf("Eólico", "Locrio", "Jónico"),
-        correcta = "Eólico",
-        explicacion = R.string.explicacion_modo_2
-    ),
-    PreguntaModosGriegos(
-        R.drawable.lidio,
-        listOf("Mixolidio", "Lidio", "Frigio"),
-        correcta = "Lidio",
-        explicacion = R.string.explicacion_modo_3
-    ),
-    PreguntaModosGriegos(
-        R.drawable.mixolidio,
-        listOf("Eólico", "Locrio", "Mixolidio"),
-        correcta = "Mixolidio",
-        explicacion = R.string.explicacion_modo_4
-    ),
-    PreguntaModosGriegos(
-        R.drawable.locrio,
-        listOf("Frigio", "Locrio", "Dórico"),
-        correcta = "Locrio",
-        explicacion = R.string.explicacion_modo_5
-    ),
-    PreguntaModosGriegos(
-        R.drawable.jonico,
-        listOf("Jónico", "Dórico", "Mixolidio"),
-        correcta = "Jónico",
-        explicacion = R.string.explicacion_modo_6
-    )
-)
-
+import com.example.appguitarra.ui.actividades.componentesactividades.PreguntaInteractiva
+import com.example.appguitarra.ui.actividades.componentesactividades.preguntasModosGriegos
+import com.example.appguitarra.ui.animacion.AnimacionLottie
+import com.example.appguitarra.utils.TitulosContenido
 
 @Composable
 fun PantallaActividadModosGriegos(navController: NavController) {
-    var preguntaActual by remember { mutableStateOf(0) }
-    var respuestaSeleccionada by remember { mutableStateOf<String?>(null) }
-    var mostrarResultado by remember { mutableStateOf(false) }
-    var aciertos by remember { mutableStateOf(0) }
-    var finalizado by remember { mutableStateOf(false) }
+    // Estado actual de la pregunta (índice en la lista)
+    var preguntaActual by rememberSaveable { mutableStateOf(0) }
 
-    val esCorrecta = respuestaSeleccionada == preguntasModosGriegos[preguntaActual].correcta
+    // Opción seleccionada por el usuario (si hay)
+    var respuestaSeleccionada by rememberSaveable { mutableStateOf<String?>(null) }
 
+    // Si se debe mostrar el resultado tras responder
+    var mostrarResultado by rememberSaveable { mutableStateOf(false) }
+
+    // Número de respuestas correctas acumuladas
+    var aciertos by rememberSaveable { mutableStateOf(0) }
+
+    // Marca si el usuario ha terminado todas las preguntas
+    var finalizado by rememberSaveable { mutableStateOf(false) }
+
+    // Contexto actual de la app (para acceder a la base de datos)
+    val context = LocalContext.current
+
+    // Pregunta actual y comprobación de si se ha respondido correctamente
+    val pregunta = preguntasModosGriegos[preguntaActual]
+    val esCorrecta = respuestaSeleccionada == pregunta.correcta
+
+    // ──────────────────────────
+    // PANTALLA FINAL DE RESULTADOS
+    // ──────────────────────────
     if (finalizado) {
+        // Se aprueba si se aciertan al menos la mitad de las preguntas
         val aprobado = aciertos >= preguntasModosGriegos.size / 2
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp),
+                .padding(
+                    top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 16.dp,
+                    start = 32.dp,
+                    end = 32.dp,
+                    bottom = 32.dp
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Muestra "APROBADO" o "SUSPENDIDO"
             Text(
                 text = stringResource(
-                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida,
+                    if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida
                 ),
                 fontSize = 22.sp,
                 textAlign = TextAlign.Center,
@@ -103,11 +102,13 @@ fun PantallaActividadModosGriegos(navController: NavController) {
                 color = if (aprobado) Color(0xFF1A6D1A) else Color(0xFFAF1E1E)
             )
 
+            // Muestra el número de aciertos sobre total
             Text(
                 text = stringResource(
-                    R.string.actividad_resumen, aciertos, preguntasModosGriegos.size
+                    R.string.actividad_resumen,
+                    aciertos,
+                    preguntasModosGriegos.size
                 ),
-
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth(),
@@ -118,40 +119,90 @@ fun PantallaActividadModosGriegos(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Si aprueba, se guarda el progreso en la base de datos y se muestran animaciones
             if (aprobado) {
-                ConfetiAnimacion(modifier = Modifier.size(300.dp))
+                LaunchedEffect(Unit) {
+                    val usuario = AppSesion.usuarioActual
+                    if (usuario != null) {
+                        val db = AppDatabase.getDatabase(context)
+                        val contenido =
+                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.ARMADURA_ARMONICA)
+                        if (contenido != null) {
+                            val progresoExistente = db.progresoDao().obtenerProgreso(usuario.id, contenido.id)
+
+                            if (progresoExistente == null) {
+                                db.progresoDao().insertar(
+                                    Progreso(
+                                        idUsuario = usuario.id,
+                                        idContenido = contenido.id,
+                                        completado = true,
+                                        fechaCompletado = System.currentTimeMillis()
+                                    )
+                                )
+                                Log.d("Progreso", "progreso guardado para usuario ${usuario.id} en contenido ${contenido.id}")
+                            } else {
+                                Log.d("Progreso", "el progreso ya existía, no se volvió a guardar")
+                            }
+
+                        } else {
+                            Log.e(
+                                "Progreso",
+                                "Contenido no encontrado: ${TitulosContenido.ARMADURA_ARMONICA}"
+                            ) // si no se guarda el contenido lo vemos en el logcat
+                        }
+
+                    }
+                }
+
+                // Animación de confeti y guitarrista
+                AnimacionLottie("confetti.json", modifier = Modifier.size(300.dp), repeticiones = 3)
                 Spacer(modifier = Modifier.height(16.dp))
-                GuitarristaAnimacion(modifier = Modifier.size(200.dp))
+                AnimacionLottie(
+                    "guitarrista1.json",
+                    modifier = Modifier.size(250.dp),
+                    repeticiones = 1
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Botón para volver a la pantalla principal
             Button(onClick = {
-                navController.navigate(Rutas.PRINCIPAL)
+                navController.navigate(Rutas.PRINCIPAL) {
+                    popUpTo(Rutas.PRINCIPAL) { inclusive = true }
+                    launchSingleTop = true
+                }
             }) {
-                Text(text = stringResource(R.string.volver_inicio))
+                Text(stringResource(R.string.volver_inicio))
             }
         }
 
-        return // salir del Composable para no pintar más
+        return // Termina aquí el composable si se ha finalizado
     }
 
+    // ──────────────────────────
+    //  PANTALLA DE PREGUNTAS
+    // ──────────────────────────
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .verticalScroll(rememberScrollState()) // Permite hacer scroll si hay desbordamiento
     ) {
+        // Título superior de la actividad
         Text(
-            text = stringResource(
-                R.string.titulo_actividad_modos_griegos
-            ),
+            text = stringResource(R.string.titulo_actividad_modos_griegos),
             fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 16.dp)
         )
-
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Componente que muestra la pregunta actual con animación
         AnimatedContent(
             targetState = preguntaActual,
             transitionSpec = {
@@ -159,90 +210,31 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             },
             label = "TransiciónPregunta"
         ) { index ->
-            val pregunta = preguntasModosGriegos[index]
-            val esCorrectaPregunta = respuestaSeleccionada == pregunta.correcta
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = when {
-                        !mostrarResultado -> Color.White
-                        esCorrectaPregunta -> Color(0xFFDFF5DD)
-                        else -> Color(0xFFFFE6E6)
-                    }
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = pregunta.imagen),
-                        contentDescription = stringResource(R.string.descripcion_imagen_modo),
-
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    pregunta.opciones.forEach { opcion ->
-                        val color = when {
-                            !mostrarResultado -> Color(0xFFE0ECF5)
-                            opcion == pregunta.correcta -> Color(0xFFB4F0B4)
-                            opcion == respuestaSeleccionada -> Color(0xFFF5B4B4)
-                            else -> Color.LightGray
-                        }
-
-                        Button(
-                            onClick = {
-                                if (!mostrarResultado) {
-                                    respuestaSeleccionada = opcion
-                                    mostrarResultado = true
-                                }
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = color,
-                                contentColor = Color.Black
-                            ),
-                            enabled = !mostrarResultado
-                        ) {
-                            Text(opcion, fontSize = 18.sp)
-                        }
-                    }
-
-                    if (mostrarResultado) {
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = stringResource(
-                                id = if (esCorrecta) R.string.respuesta_correcta else R.string.respuesta_incorrecta,
-                                stringResource(pregunta.explicacion)
-                            ),
-                            color = if (esCorrectaPregunta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
+            PreguntaInteractiva(
+                pregunta = preguntasModosGriegos[index],
+                respuestaSeleccionada = respuestaSeleccionada,
+                mostrarResultado = mostrarResultado,
+                onSeleccionar = {
+                    respuestaSeleccionada = it
+                    mostrarResultado = true
                 }
-            }
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Botón "Siguiente" o "Finalizar" visible tras responder
         if (mostrarResultado) {
             Button(
                 onClick = {
-                    if (esCorrecta) aciertos++
-
+                    if (esCorrecta) aciertos++ // Suma acierto si fue correcta
                     if (preguntaActual < preguntasModosGriegos.lastIndex) {
+                        // Pasamos a la siguiente pregunta
                         preguntaActual++
                         respuestaSeleccionada = null
                         mostrarResultado = false
                     } else {
+                        // Si era la última, se finaliza la actividad
                         finalizado = true
                     }
                 },
@@ -250,7 +242,7 @@ fun PantallaActividadModosGriegos(navController: NavController) {
             ) {
                 Text(
                     text = stringResource(
-                        id = if (preguntaActual < preguntas.lastIndex)
+                        id = if (preguntaActual < preguntasModosGriegos.lastIndex)
                             R.string.boton_siguiente
                         else
                             R.string.boton_finalizar
@@ -261,36 +253,8 @@ fun PantallaActividadModosGriegos(navController: NavController) {
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ConfetiAnimacion(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
-    val progress by animateLottieCompositionAsState(
-        composition
-        = composition,
-        iterations = 3
-    )
-
-    LottieAnimation(
-        composition = composition,
-        progress = { progress },
-        modifier = modifier
-    )
+fun PreviewPantallaActividadModosGriegos() {
+    PantallaActividadModosGriegos(navController = rememberNavController())
 }
-
-@Composable
-fun GuitarristaAnimacion(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista.json"))
-    val progress by animateLottieCompositionAsState(
-        composition = composition,
-        iterations = LottieConstants.IterateForever
-    )
-
-    LottieAnimation(
-        composition = composition,
-        progress = { progress },
-        modifier = modifier
-    )
-}
-
-
-

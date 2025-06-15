@@ -1,6 +1,9 @@
 package com.example.appguitarra.ui.principal
 
 import MastilVisual
+import android.util.Log
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -30,12 +33,53 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Density
+import kotlinx.coroutines.delay
+
+import androidx.compose.ui.platform.LocalContext
+import com.example.appguitarra.data.AppDatabase
+import com.example.appguitarra.data.AppSesion
+import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PantallaPrincipal(navController: NavHostController) {
     var submenuActivo by remember { mutableStateOf("Modos griegos") }
     var notaSeleccionada by remember { mutableStateOf("") }
+
+    val contexto = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var porcentajeProgreso by remember { mutableStateOf(0f) }
+    var refrescarRosco by remember { mutableStateOf(false) }
+
+
+
+    LaunchedEffect(Unit) {
+        try {
+            val usuario = AppSesion.usuarioActual
+            if (usuario == null) {
+                Log.e("PantallaPrincipal", "Usuario nulo en AppSesion")
+                return@LaunchedEffect
+            }
+            if (usuario.id == 0) {
+                Log.e("PantallaPrincipal", "ID de usuario es 0")
+                return@LaunchedEffect
+            }
+
+            val db = AppDatabase.getDatabase(contexto)
+            val progreso = db.progresoDao().obtenerPorUsuario(usuario.id)
+            val totalActividades = 3
+
+            Log.d("PantallaPrincipal", "Actividades completadas: ${progreso.size}")
+            porcentajeProgreso = progreso.size / totalActividades.toFloat()
+
+        } catch (e: Exception) {
+            Log.e("PantallaPrincipal", "Error al obtener progreso", e)
+        }
+    }
+
+
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Menú superior
@@ -141,7 +185,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                                     0xFFE0ECF5
                                 )
                             ),
-                            shape = shapePua(),
+                            shape = ShapePua(),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
                             modifier = Modifier
                                 .size(56.dp)
@@ -193,6 +237,7 @@ fun PantallaPrincipal(navController: NavHostController) {
 
                 // Contenido específico del submenu
                 when (submenuActivo) {
+
                     opcionJonicos -> {
                         Text(
                             text = stringResource(R.string.descripcion_modos_jonicos),
@@ -202,6 +247,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                         Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_JONICOS) }) {
                             Text(stringResource(R.string.ir_a_teoria))
                         }
+
                     }
 
                     opcionArmadura -> {
@@ -213,6 +259,7 @@ fun PantallaPrincipal(navController: NavHostController) {
                         Button(onClick = { navController.navigate(Rutas.TEORIA_ARMADURA) }) {
                             Text(stringResource(R.string.ir_a_teoria))
                         }
+
                     }
 
                     opcionGriegos -> {
@@ -224,14 +271,28 @@ fun PantallaPrincipal(navController: NavHostController) {
                         Button(onClick = { navController.navigate(Rutas.TEORIA_MODOS_GRIEGOS) }) {
                             Text(stringResource(R.string.ir_a_teoria))
                         }
+
                     }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Box(modifier = Modifier.padding(top = 32.dp)) {
+                    RoscoProgreso(
+                        porcentaje = porcentajeProgreso,
+                        texto = stringResource(R.string.progreso_total_del_curso)
+                    )
                 }
             }
         }
     }
+    LaunchedEffect(porcentajeProgreso) {
+        //Esto fuerza el repintado si cambia el progreso
+    }
+
 }
 
-fun shapePua(): Shape = object : Shape {
+@Composable
+fun ShapePua(): Shape = object : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
@@ -250,6 +311,74 @@ fun shapePua(): Shape = object : Shape {
 
         return Outline.Generic(path)
     }
+}
+
+@Composable
+fun RoscoProgreso(porcentaje: Float, texto: String = "Progreso de esta actividad") {
+
+    var progreso by remember { mutableStateOf(0f) }
+
+    // Lanza la animación desde 0 hasta porcentajeFinal
+    LaunchedEffect(porcentaje) {
+        progreso = 0f
+        delay(300) // pequeña pausa opcional
+        progreso = porcentaje
+    }
+
+    val progresoAnimado by animateFloatAsState(
+        targetValue = progreso,
+        animationSpec = tween(durationMillis = 1000),
+        label = "animacionRosco"
+    )
+
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+
+    ){
+        Text(
+            text = texto,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF153B59),
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+
+        CircularProgressIndicator(
+            progress = { progresoAnimado },
+            modifier = Modifier
+                .size(120.dp),
+            color = Color(0xFF1A6D1A),
+            strokeWidth = 10.dp,
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.porcentaje_completado, (porcentaje * 100).toInt()),
+            fontSize = 14.sp,
+            color = Color.DarkGray
+        )
+
+    }
+
+}
+
+//prueba:
+
+@Composable
+fun DemoRosco() {
+    var progreso by remember { mutableStateOf(0f) }
+
+    // Simula una carga
+    LaunchedEffect(Unit) {
+        delay(500)
+        progreso = 0.75f // Esto dispara la animación
+    }
+
+    RoscoProgreso(porcentaje = progreso)
 }
 
 

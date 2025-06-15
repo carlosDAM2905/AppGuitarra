@@ -1,118 +1,110 @@
 package com.example.appguitarra.ui.actividades
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
+import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.R
+import com.example.appguitarra.data.AppDatabase
+import com.example.appguitarra.data.AppSesion
+import com.example.appguitarra.model.Progreso
 import com.example.appguitarra.navigation.Rutas
-
-// Modelo de pregunta
-data class PreguntaArmadura(
-    val imagen: Int,
-    val opciones: List<String>,
-    val correcta: String,
-    val explicacion: Int
-)
-
-// Lista de preguntas
-val preguntas = listOf(
-    PreguntaArmadura(
-        R.drawable.armadura_3_sostenidos,
-        listOf("G", "D", "A"),
-        "A",
-        R.string.explicacion_pregunta1
-    ),
-    PreguntaArmadura(
-        R.drawable.armadura_2_sostenidos,
-        listOf("E", "D", "C"),
-        "D",
-        R.string.explicacion_pregunta2
-    ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_ab,
-        listOf("Ab", "Bb", "F"),
-        "Ab",
-        R.string.explicacion_pregunta3
-    ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_eb,
-        listOf("Eb", "F", "Bb"),
-        "Eb",
-        R.string.explicacion_pregunta4
-    ),
-    PreguntaArmadura(
-        R.drawable.armadura_de_f,
-        listOf("C", "F", "G"),
-        "F",
-        R.string.explicacion_pregunta5
-    ),
-    PreguntaArmadura(
-        R.drawable.true_false,
-        listOf("Verdadero", "Falso"),
-        "Falso",
-        R.string.explicacion_pregunta6
-    )
-
-
-)
+import com.example.appguitarra.ui.actividades.componentesactividades.PreguntaInteractiva
+import com.example.appguitarra.ui.actividades.componentesactividades.preguntasArmadura
+import com.example.appguitarra.ui.animacion.AnimacionLottie
+import com.example.appguitarra.utils.TitulosContenido
 
 @Composable
 fun PantallaActividadArmadura(navController: NavController) {
-    var preguntaActual by remember { mutableStateOf(0) }
-    var respuestaSeleccionada by remember { mutableStateOf<String?>(null) }
-    var mostrarResultado by remember { mutableStateOf(false) }
+    // Estado actual de la pregunta (índice en la lista)
+    var preguntaActual by rememberSaveable { mutableStateOf(0) }
 
-    var aciertos by remember { mutableStateOf(0) }
-    var finalizado by remember { mutableStateOf(false) }
+    // Opción seleccionada por el usuario (si hay)
+    var respuestaSeleccionada by rememberSaveable { mutableStateOf<String?>(null) }
 
-    val pregunta = preguntas[preguntaActual]
+    // Si se debe mostrar el resultado tras responder
+    var mostrarResultado by rememberSaveable { mutableStateOf(false) }
+
+    // Número de respuestas correctas acumuladas
+    var aciertos by rememberSaveable { mutableStateOf(0) }
+
+    // Marca si el usuario ha terminado todas las preguntas
+    var finalizado by rememberSaveable { mutableStateOf(false) }
+
+    // Contexto actual de la app (para acceder a la base de datos)
+    val context = LocalContext.current
+
+    // Pregunta actual y comprobación de si se ha respondido correctamente
+    val pregunta = preguntasArmadura[preguntaActual]
     val esCorrecta = respuestaSeleccionada == pregunta.correcta
 
+    // ──────────────────────────
+    // PANTALLA FINAL DE RESULTADOS
+    // ──────────────────────────
     if (finalizado) {
-        val aprobado = aciertos >= preguntas.size / 2
+        // Se aprueba si se aciertan al menos la mitad de las preguntas
+        val aprobado = aciertos >= preguntasArmadura.size / 2
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp),
+                .padding(
+                    top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 16.dp,
+                    start = 32.dp,
+                    end = 32.dp,
+                    bottom = 32.dp
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Título
+            // Muestra "APROBADO" o "SUSPENDIDO"
             Text(
                 text = stringResource(
                     if (aprobado) R.string.actividad_aprobada else R.string.actividad_suspendida
                 ),
                 fontSize = 22.sp,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = if (aprobado) Color(0xFF1A6D1A) else Color(0xFFAF1E1E)
             )
 
+            // Muestra el número de aciertos sobre total
             Text(
-                text = stringResource(
-                    R.string.actividad_resumen, aciertos, preguntas.size
-
-                ),
+                text = stringResource(R.string.actividad_resumen, aciertos, preguntasArmadura.size),
                 modifier = Modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth(),
@@ -123,37 +115,90 @@ fun PantallaActividadArmadura(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Si aprueba, se guarda el progreso en la base de datos y se muestran animaciones
             if (aprobado) {
-                ConfetiAnimacion2(modifier = Modifier.size(300.dp))
+                LaunchedEffect(Unit) {
+                    val usuario = AppSesion.usuarioActual
+                    if (usuario != null) {
+                        val db = AppDatabase.getDatabase(context)
+                        val contenido =
+                            db.contenidoDao().obtenerPorTitulo(TitulosContenido.ARMADURA_ARMONICA)
+                        if (contenido != null) {
+                            val progresoExistente = db.progresoDao().obtenerProgreso(usuario.id, contenido.id)
+
+                            if (progresoExistente == null) {
+                                db.progresoDao().insertar(
+                                    Progreso(
+                                        idUsuario = usuario.id,
+                                        idContenido = contenido.id,
+                                        completado = true,
+                                        fechaCompletado = System.currentTimeMillis()
+                                    )
+                                )
+                                Log.d("Progreso", "progreso guardado para usuario ${usuario.id} en contenido ${contenido.id}")
+                            } else {
+                                Log.d("Progreso", "el progreso ya existía, no se volvió a guardar")
+                            }
+
+                        } else {
+                            Log.e(
+                                "Progreso",
+                                "Contenido no encontrado: ${TitulosContenido.ARMADURA_ARMONICA}"
+                            ) // si no se guarda el contenido lo vemos en el logcat
+                        }
+
+                    }
+                }
+
+                // Animación de confeti y guitarrista
+                AnimacionLottie("confetti.json", modifier = Modifier.size(300.dp), repeticiones = 3)
                 Spacer(modifier = Modifier.height(16.dp))
-                Guitarrista2Animacion(modifier = Modifier.size(200.dp))
+                AnimacionLottie(
+                    "guitarrista2.json",
+                    modifier = Modifier.size(250.dp),
+                    repeticiones = 1
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Botón para volver a la pantalla principal
             Button(onClick = {
-                navController.navigate(Rutas.PRINCIPAL)
+                navController.navigate(Rutas.PRINCIPAL) {
+                    popUpTo(Rutas.PRINCIPAL) { inclusive = true }
+                    launchSingleTop = true
+                }
             }) {
-                Text(text = stringResource(R.string.volver_inicio))
+                Text(stringResource(R.string.volver_inicio))
             }
         }
 
-        return // salir del Composable para no pintar más
+        return // Termina aquí el composable si se ha finalizado
     }
 
+    // ──────────────────────────
+    //  PANTALLA DE PREGUNTAS
+    // ──────────────────────────
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .verticalScroll(rememberScrollState()) // Permite hacer scroll si hay desbordamiento
     ) {
+        // Título superior de la actividad
         Text(
             text = stringResource(R.string.titulo_actividad_armadura),
             fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Componente que muestra la pregunta actual con animación
         AnimatedContent(
             targetState = preguntaActual,
             transitionSpec = {
@@ -161,92 +206,31 @@ fun PantallaActividadArmadura(navController: NavController) {
             },
             label = "TransiciónPregunta"
         ) { index ->
-            val pregunta = preguntas[index]
-            val esCorrectaPregunta = respuestaSeleccionada == pregunta.correcta
-
-            // Pregunta con imagen y fondo dinámico
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = when {
-                        !mostrarResultado -> Color.White
-                        esCorrecta -> Color(0xFFDFF5DD)
-                        else -> Color(0xFFFFE6E6)
-                    }
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = pregunta.imagen),
-                        contentDescription = stringResource(R.string.descripcion_imagen_armadura),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    pregunta.opciones.forEach { opcion ->
-                        val color = when {
-                            !mostrarResultado -> Color(0xFFE0ECF5)
-                            opcion == pregunta.correcta -> Color(0xFFB4F0B4)
-                            opcion == respuestaSeleccionada -> Color(0xFFF5B4B4)
-                            else -> Color.LightGray
-                        }
-
-                        Button(
-                            onClick = {
-                                if (!mostrarResultado) {
-                                    respuestaSeleccionada = opcion
-                                    mostrarResultado = true
-                                }
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = color,
-                                contentColor = Color.Black
-                            ),
-                            enabled = !mostrarResultado
-                        ) {
-                            Text(opcion, fontSize = 18.sp)
-                        }
-                    }
-
-                    if (mostrarResultado) {
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = stringResource(
-                                id = if (esCorrecta) R.string.respuesta_correcta else R.string.respuesta_incorrecta,
-                                stringResource(pregunta.explicacion)
-                            ),
-                            color = if (esCorrecta) Color(0xFF1A6D1A) else Color(0xFFAF1E1E),
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-
+            PreguntaInteractiva(
+                pregunta = preguntasArmadura[index],
+                respuestaSeleccionada = respuestaSeleccionada,
+                mostrarResultado = mostrarResultado,
+                onSeleccionar = {
+                    respuestaSeleccionada = it
+                    mostrarResultado = true
                 }
-            }
+            )
         }
-
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Botón "Siguiente" o "Finalizar" visible tras responder
         if (mostrarResultado) {
             Button(
                 onClick = {
-                    if (esCorrecta) aciertos++
-
-                    if (preguntaActual < preguntas.lastIndex) {
+                    if (esCorrecta) aciertos++ // Suma acierto si fue correcta
+                    if (preguntaActual < preguntasArmadura.lastIndex) {
+                        // Pasamos a la siguiente pregunta
                         preguntaActual++
                         respuestaSeleccionada = null
                         mostrarResultado = false
                     } else {
+                        // Si era la última, se finaliza la actividad
                         finalizado = true
                     }
                 },
@@ -254,45 +238,19 @@ fun PantallaActividadArmadura(navController: NavController) {
             ) {
                 Text(
                     text = stringResource(
-                        id = if (preguntaActual < preguntas.lastIndex)
+                        id = if (preguntaActual < preguntasArmadura.lastIndex)
                             R.string.boton_siguiente
                         else
                             R.string.boton_finalizar
                     )
                 )
-
             }
         }
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ConfetiAnimacion2(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("confetti.json"))
-    val progress by animateLottieCompositionAsState(
-        composition
-        = composition,
-        iterations = 3
-    )
-
-    LottieAnimation(
-        composition = composition,
-        progress = { progress },
-        modifier = modifier
-    )
-}
-
-@Composable
-fun Guitarrista2Animacion(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("guitarrista_woman.json"))
-    val progress by animateLottieCompositionAsState(
-        composition = composition,
-        iterations = LottieConstants.IterateForever
-    )
-
-    LottieAnimation(
-        composition = composition,
-        progress = { progress },
-        modifier = modifier
-    )
+fun PreviewPantallaActividadArmadura() {
+    PantallaActividadArmadura(navController = rememberNavController())
 }

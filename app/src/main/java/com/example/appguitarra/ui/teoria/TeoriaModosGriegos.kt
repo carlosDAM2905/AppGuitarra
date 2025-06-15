@@ -1,14 +1,18 @@
 package com.example.appguitarra.ui.teoria
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -17,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,12 +39,16 @@ import com.example.appguitarra.navigation.Rutas
 
 @Composable
 fun TeoriaModosGriegos(navController: NavController) {
-    val scrollState = rememberScrollState()
+    val guardarEstadoScroll = rememberSaveable(saver = ScrollState.Saver) { ScrollState(0) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(18.dp),
+            .verticalScroll(guardarEstadoScroll)
+            .padding(
+                top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 16.dp, // añadimos 16.dp para que no quede tan pegado a la barra de notificaciones del movil
+                start = 32.dp,
+                end = 32.dp,
+                ),
         verticalArrangement = Arrangement.Top
     ) {
 
@@ -51,7 +60,7 @@ fun TeoriaModosGriegos(navController: NavController) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
+                .padding(bottom = 24.dp)
         )
 
         Text(
@@ -59,7 +68,8 @@ fun TeoriaModosGriegos(navController: NavController) {
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .fillMaxWidth()
+
         )
 
         // imagen 1:
@@ -80,14 +90,14 @@ fun TeoriaModosGriegos(navController: NavController) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
+                .padding(bottom = 16.dp)
 
         )
         Text(
             text = stringResource(R.string.explicacion_modos_griegos2),
             textAlign = TextAlign.Justify,
             fontSize = 15.sp,
-            modifier = Modifier.padding(bottom = 32.dp)
+            modifier = Modifier.padding(top = 24.dp, bottom = 32.dp)
         )
 
         Image(
@@ -183,9 +193,11 @@ fun TeoriaModosGriegos(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
+                .padding(bottom = 32.dp)
         ) {
             Text(
-                stringResource(R.string.volver_pagina_princial)
+                stringResource(R.string.volver_pagina_princial),
+
             )
         }
     }
