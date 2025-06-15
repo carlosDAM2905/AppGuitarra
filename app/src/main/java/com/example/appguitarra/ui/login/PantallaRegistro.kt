@@ -1,6 +1,8 @@
 package com.example.appguitarra.ui.login
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -33,6 +35,7 @@ fun PantallaRegistro(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
@@ -73,24 +76,36 @@ fun PantallaRegistro(
 
         Button(
             onClick = {
-                if (nombre.isBlank() || email.isBlank() || contraseña.isBlank()) {
-                    mensajeError = contexto.getString(R.string.error_campos_vacios)
-                } else {
-                    scope.launch(Dispatchers.IO) {
-                        val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
-                        if (usuarioExistente != null) {
-                            mensajeError = contexto.getString(R.string.error_usuario_existente)
-                        } else {
-                            db.usuarioDao().insertar(
-                                Usuario(
-                                    nombre = nombre,
-                                    email = email,
-                                    contraseña = contraseña,
-                                    esPremium = false
+                when {
+                    nombre.isBlank() || email.isBlank() || contraseña.isBlank() -> {
+                        mensajeError = contexto.getString(R.string.error_campos_vacios)
+                    }
+
+                    !esEmailValido(email) -> {
+                        mensajeError = "Introduce un correo válido"
+                    }
+
+                    !esContraseñaValida(contraseña) -> {
+                        mensajeError = "La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número"
+                    }
+
+                    else -> {
+                        scope.launch(Dispatchers.IO) {
+                            val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
+                            if (usuarioExistente != null) {
+                                mensajeError = contexto.getString(R.string.error_usuario_existente)
+                            } else {
+                                db.usuarioDao().insertar(
+                                    Usuario(
+                                        nombre = nombre,
+                                        email = email,
+                                        contraseña = contraseña,
+                                        esPremium = false
+                                    )
                                 )
-                            )
-                            withContext(Dispatchers.Main) {
-                                onRegistroExitoso()
+                                withContext(Dispatchers.Main) {
+                                    onRegistroExitoso()
+                                }
                             }
                         }
                     }
@@ -98,7 +113,7 @@ fun PantallaRegistro(
             },
 
 
-            modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.boton_registrarse))
         }

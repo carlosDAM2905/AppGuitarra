@@ -1,23 +1,25 @@
 package com.example.appguitarra.ui.teoria
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +27,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,18 +34,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.R
-import com.example.appguitarra.navigation.Rutas
+import com.example.appguitarra.ui.componenteteoria.ListaVideos
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
 
 @Composable
 fun TeoriaArmadura(navController: NavController) {
 
-    val scrollState = rememberScrollState()
+    val guardarEstadoScroll = rememberSaveable(saver = ScrollState.Saver) { ScrollState(0) }
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(18.dp),
+            .verticalScroll(guardarEstadoScroll)
+            .padding(
+                top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + 16.dp, // añadimos 16.dp para que no quede tan pegado a la barra de notificaciones del movil
+                start = 32.dp,
+                end = 32.dp,
+
+                ),
         verticalArrangement = Arrangement.Top
     ) {
 
@@ -56,7 +62,7 @@ fun TeoriaArmadura(navController: NavController) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
+                .padding(bottom = 24.dp)
         )
         Text(
             text = stringResource(R.string.ciclo_de_quintas),
@@ -122,6 +128,15 @@ fun TeoriaArmadura(navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        ListaVideos(
+            tituloSeccion = "Demostración práctica del uso del ciclo de quintas",
+            videos = listOf(
+                "0WwgrvAGdOQ" to "1. Patrón DO mayor (dedo 4, sexta cuerda)"
+            )
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         // Botón para actividad
         Button(
             onClick = { navController.navigate("actividad_armadura") },
@@ -147,6 +162,7 @@ fun TeoriaArmadura(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
+                .padding(bottom = 32.dp)
         ) {
             Text(stringResource(R.string.volver_pagina_princial))
         }

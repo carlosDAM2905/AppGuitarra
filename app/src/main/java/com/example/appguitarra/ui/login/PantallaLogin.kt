@@ -1,7 +1,10 @@
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -17,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appguitarra.R
 import com.example.appguitarra.data.AppDatabase
+import com.example.appguitarra.data.AppSesion
 import com.example.appguitarra.ui.theme.AppGuitarraTheme
 import kotlinx.coroutines.*
 
@@ -38,6 +42,7 @@ fun PantallaLogin(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState()) // añadido scroll vertical para no bloquear el login
             .background(Color.White)
             .padding(24.dp),
         verticalArrangement = Arrangement.Top,
@@ -107,11 +112,14 @@ fun PantallaLogin(
                         if (email.isBlank() || password.isBlank()) {
 
                             mensajeError = contexto.getString(R.string.error_campos_vacios)
+
+
                         } else {
                             scope.launch(Dispatchers.IO) {
                                 val usuario = db.usuarioDao().login(email, password)
                                 if (usuario != null) {
                                     withContext(Dispatchers.Main) {
+                                        AppSesion.usuarioActual = usuario
                                         mensajeError = ""
                                         onLoginSuccess()
                                     }
@@ -143,6 +151,11 @@ fun PantallaLogin(
         }
     }
 }
+
+fun esEmailValido(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

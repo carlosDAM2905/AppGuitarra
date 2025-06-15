@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.appguitarra.model.Contenido
-import com.example.appguitarra.model.ContenidoDao
-import com.example.appguitarra.model.Progreso
-import com.example.appguitarra.model.ProgresoDao
-import com.example.appguitarra.model.Usuario
-import com.example.appguitarra.model.UsuarioDao
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.appguitarra.model.*
+import com.example.appguitarra.utils.TitulosContenido
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-
-@Database(entities = [Usuario::class,
-    Contenido::class,
-    Progreso::class], version = 1,
-    exportSchema = false)
+@Database(
+    entities = [Usuario::class, Contenido::class, Progreso::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun usuarioDao(): UsuarioDao
@@ -32,9 +32,58 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "appguitarra_db"
-                ).build()
+                )
+                    .addCallback(object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                        }
+
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            super.onOpen(db)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                INSTANCE?.let { dbInstance ->
+                                    insertarContenidosSiEsNecesario(dbInstance)
+                                }
+                            }
+                        }
+                    })
+                    .build()
+
                 INSTANCE = instance
                 instance
+            }
+        }
+
+        private suspend fun insertarContenidosSiEsNecesario(db: AppDatabase) {
+            val contenidoDao = db.contenidoDao()
+            val contenidos = contenidoDao.obtenerTodos()
+            if (contenidos.isEmpty()) {
+                contenidoDao.insertarTodo(
+                    listOf(
+                        Contenido(
+                            titulo = TitulosContenido.MODOS_JONICOS,
+                            descripcion = "Actividad sobre modos jónicos",
+                            tipo = "actividad",
+                            url = null,
+                            premium = false
+                        ),
+                        Contenido(
+                            titulo = TitulosContenido.ARMADURA_ARMONICA,
+                            descripcion = "Actividad sobre armadura",
+                            tipo = "actividad",
+                            url = null,
+                            premium = false
+                        ),
+                        Contenido(
+                            titulo = TitulosContenido.MODOS_GRIEGOS,
+                            descripcion = "Actividad sobre modos griegos",
+                            tipo = "actividad",
+                            url = null,
+                            premium = false
+                        )
+                    )
+                )
             }
         }
     }
