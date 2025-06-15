@@ -76,25 +76,36 @@ fun PantallaRegistro(
 
         Button(
             onClick = {
-                if (nombre.isBlank() || email.isBlank() || contraseña.isBlank()) {
-                    mensajeError = contexto.getString(R.string.error_campos_vacios)
+                when {
+                    nombre.isBlank() || email.isBlank() || contraseña.isBlank() -> {
+                        mensajeError = contexto.getString(R.string.error_campos_vacios)
+                    }
 
-            } else {
-                    scope.launch(Dispatchers.IO) {
-                        val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
-                        if (usuarioExistente != null) {
-                            mensajeError = contexto.getString(R.string.error_usuario_existente)
-                        } else {
-                            db.usuarioDao().insertar(
-                                Usuario(
-                                    nombre = nombre,
-                                    email = email,
-                                    contraseña = contraseña,
-                                    esPremium = false
+                    !esEmailValido(email) -> {
+                        mensajeError = "Introduce un correo válido"
+                    }
+
+                    !esContraseñaValida(contraseña) -> {
+                        mensajeError = "La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número"
+                    }
+
+                    else -> {
+                        scope.launch(Dispatchers.IO) {
+                            val usuarioExistente = db.usuarioDao().obtenerPorEmail(email)
+                            if (usuarioExistente != null) {
+                                mensajeError = contexto.getString(R.string.error_usuario_existente)
+                            } else {
+                                db.usuarioDao().insertar(
+                                    Usuario(
+                                        nombre = nombre,
+                                        email = email,
+                                        contraseña = contraseña,
+                                        esPremium = false
+                                    )
                                 )
-                            )
-                            withContext(Dispatchers.Main) {
-                                onRegistroExitoso()
+                                withContext(Dispatchers.Main) {
+                                    onRegistroExitoso()
+                                }
                             }
                         }
                     }
@@ -102,7 +113,7 @@ fun PantallaRegistro(
             },
 
 
-            modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(R.string.boton_registrarse))
         }

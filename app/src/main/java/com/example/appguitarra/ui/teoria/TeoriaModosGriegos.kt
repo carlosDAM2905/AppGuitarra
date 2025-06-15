@@ -36,6 +36,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.appguitarra.R
 import com.example.appguitarra.navigation.Rutas
+import com.example.appguitarra.ui.componenteteoria.ListaVideos
 
 @Composable
 fun TeoriaModosGriegos(navController: NavController) {
@@ -165,6 +166,19 @@ fun TeoriaModosGriegos(navController: NavController) {
         )
 
         //modificada la altura para poder visualizar los dos botones
+        Spacer(modifier = Modifier.height(64.dp))
+
+
+        ListaVideos(
+            tituloSeccion = "Demostraciones prácticas (modo jónico y patrones en el mástil)",
+            videos = listOf(
+                "zLiZuwYPpQY" to "1. Modo jónico en mástil (posición 1)",
+                "GAsBvKCNiKM" to "2. Patrón escala DO mayor - modo jónico",
+                "o_FgJf8dqJU" to "3. Posición grado uno - patrón jónico",
+                "maWeOdPSONs" to "4. Modo jónico completo - mástil"
+            )
+        )
+
         Spacer(modifier = Modifier.height(64.dp))
 
         // Botón para actividad
