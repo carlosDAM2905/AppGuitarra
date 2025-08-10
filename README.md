@@ -51,7 +51,7 @@ com.example.appguitarra/
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/RobertGV00/AppGuitarra.git
+   git clone https://github.com/carlosDAM2905/AppGuitarra.git
    ```
 
 2. Ábrelo con **Android Studio** (Hedgehog o posterior).
