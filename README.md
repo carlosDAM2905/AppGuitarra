@@ -2,6 +2,7 @@
 
 **AppGuitarra** es una aplicación educativa desarrollada en Android con Jetpack Compose cuyo objetivo es ayudar a los usuarios a aprender teoría musical aplicada a la guitarra de forma interactiva y visual. Forma parte del **proyecto final del CFGS de Desarrollo de Aplicaciones Multiplataforma (DAM)**.
 
+![Demostración de AppGuitarra](https://github.com/user-attachments/assets/ba75fb42-b88e-41e3-bb1f-b5aa9cbd31e9)
 ---
 
 ## 📱 Funcionalidades principales
@@ -13,6 +14,8 @@
 - ✅ Navegación entre pantallas con Jetpack Navigation.
 - ✅ Animaciones al progresar en actividades y superarlas.
 - ✅ Diferentes pantallas de evaluación con feedback según el resultado.
+
+  
 
 ---
 
